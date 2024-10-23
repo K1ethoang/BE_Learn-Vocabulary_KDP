@@ -1,0 +1,14 @@
+${AnsiColor.GREEN}
+  ___   _____       _   _   _____    ____   ____
+ |_ _| |_   _|     | | | | |_   _|  / ___| |___ \
+  | |    | |       | | | |   | |   | |       __) |
+  | |    | |    _  | |_| |   | |   | |___   / __/
+ |___|   |_|   (_)  \___/    |_|    \____| |_____|
+
+${AnsiColor.BRIGHT_RED}===
+${AnsiColor.BRIGHT_GREEN}:: Website Learn Vocabulary KDP :: ${AnsiColor.BRIGHT_WHITE}Running Spring Boot (v${spring-boot.version})
+${AnsiColor.BRIGHT_WHITE}---
+${AnsiColor.BRIGHT_GREEN}:: YouTube :: ${AnsiColor.BRIGHT_CYAN}https://www.youtube.com/@K1ethoang
+${AnsiColor.BRIGHT_GREEN}:: Project's repo :: ${AnsiColor.BRIGHT_CYAN}https://github.com/K1ethoang/BE_Learn-Vocabulary_KDP
+${AnsiColor.BRIGHT_RED}===
+${AnsiColor.BRIGHT_WHITE}
