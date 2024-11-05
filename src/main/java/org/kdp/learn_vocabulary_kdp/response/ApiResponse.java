@@ -11,15 +11,13 @@ public class ApiResponse {
         Map<String, Object> response = new HashMap<>();
         response.put("status", httpStatus.value());
         response.put("message", message);
-        response.put("response", responseObject);
+        response.put("data", responseObject);
 
         return new ResponseEntity<>(response, httpStatus);
     }
 
-    public static ResponseEntity<ErrorResponse> responseError(HttpStatus httpStatus, String message)
-    {
-        ErrorResponse errorResponse = new ErrorResponse(httpStatus.value(),
-                message);
-        return new ResponseEntity<>(errorResponse,httpStatus);
+    public static ResponseEntity<ErrorResponse> responseError(HttpStatus httpStatus, String message) {
+        ErrorResponse errorResponse = new ErrorResponse(httpStatus.value(), message);
+        return new ResponseEntity<>(errorResponse, httpStatus);
     }
 }
