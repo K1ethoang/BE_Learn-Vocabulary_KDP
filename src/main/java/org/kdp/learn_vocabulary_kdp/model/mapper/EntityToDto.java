@@ -8,10 +8,10 @@ import org.modelmapper.ModelMapper;
 
 @AllArgsConstructor
 @Data
-public class DtoToEntity {
+public class EntityToDto {
     private static ModelMapper mapper;
 
-    public static Word word(WordDto wordDto) {
-        return mapper.map(wordDto, Word.class);
+    public static WordDto wordDto(Word word) {
+        return mapper.map(word, WordDto.class);
     }
 }

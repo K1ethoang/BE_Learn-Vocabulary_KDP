@@ -13,5 +13,5 @@ public interface WordService {
 
     void deleteWord(String id);
 
-    WordDto getWordById(String id);
+    WordDto getWordByUserId(String user);
 }

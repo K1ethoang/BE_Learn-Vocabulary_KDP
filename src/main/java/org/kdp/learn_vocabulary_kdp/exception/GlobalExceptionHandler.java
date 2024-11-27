@@ -12,18 +12,21 @@ public class GlobalExceptionHandler {
     // System exception
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handlerException(Exception e) {
-        return ApiResponse.responseError(HttpStatus.INTERNAL_SERVER_ERROR,
-                e.getMessage());
+        return ApiResponse.responseError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundException e) {
-        return ApiResponse.responseError(e.getHttpStatus(),
-                e.getMessage());
+        return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
     }
 
     @ExceptionHandler(InvalidException.class)
-    public ResponseEntity<ErrorResponse> handlerInvalidException(InvalidException e){
+    public ResponseEntity<ErrorResponse> handlerInvalidException(InvalidException e) {
+        return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
+    }
+
+    @ExceptionHandler(NotNullException.class)
+    public ResponseEntity<ErrorResponse> handlerNotNullException(NotFoundException e) {
         return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
     }
 }

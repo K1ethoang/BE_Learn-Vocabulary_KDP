@@ -5,7 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.model.DTO.word.WordDto;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
-import org.kdp.learn_vocabulary_kdp.service.interfaces.WordService;
+import org.kdp.learn_vocabulary_kdp.service.impl.WordServiceImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,22 +18,21 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @Log4j2
 public class WordControllerV1 {
-    private final WordService wordService;
-    private final String DEFAULT_PAGE_NO = "0";
-    private final String DEFAULT_PAGE_SIZE = "10";
-    private final String DEFAULT_SORT_BY = "updatedAt";
+    private static final String DEFAULT_PAGE_SIZE = "10";
+    private static final String DEFAULT_PAGE_NO = "0";
+    private static final String DEFAULT_SORT_BY = "updatedAt";
+    private final WordServiceImpl wordService;
 
     @GetMapping("")
     public ResponseEntity<Object> getAllWords(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_SORT_BY) String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
-        
+
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getAllWords(pageable));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> getWordById(@PathVariable String id) {
-        log.info("Received request to get word with id: {}", id);
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getWordById(id));
+    @GetMapping("/{userId}")
+    public ResponseEntity<Object> getWordByUserId(@PathVariable String userId) {
+        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getWordByUserId(userId));
     }
 
     @PostMapping("")

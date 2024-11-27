@@ -4,6 +4,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,13 @@ import java.util.List;
 @Configuration
 @ComponentScan(basePackages = "org.kdp.learn_vocabulary_kdp.controller.v1")
 public class OpenApiConfig {
+    @Value("${server.port}")
+    private String serverPort;
+
     @Bean
     public OpenAPI defineOpenApi() {
         Server server = new Server();
+        server.setUrl("http://localhost:" + serverPort);
         server.setDescription("Development");
 
         Contact myContact = new Contact();
