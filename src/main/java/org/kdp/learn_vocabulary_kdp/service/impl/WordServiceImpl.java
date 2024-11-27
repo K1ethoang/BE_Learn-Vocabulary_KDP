@@ -37,7 +37,7 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public WordDto getWordById(String id) throws NotFoundException {
+    public WordDto getWordByUserId(String id) throws NotFoundException {
         Word wordFromDb = wordRepository.findById(id).orElseThrow(() -> new NotFoundException(WordMessage.NOT_FOUND));
 
         return EntityToDto.wordDto(wordFromDb);
@@ -45,6 +45,8 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public WordDto createWord(WordDto wordDto) {
+        // validate first
+
         return null;
     }
 
