@@ -1,14 +1,15 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
-@Entity
-@Table(name = "users")
-@Builder
+@Entity(name = "users")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,31 +23,30 @@ public class User extends Auditable {
     @Column(name = "full_name")
     private String fullName;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
     private String email;
 
-    private String username;
-
+    @Column(name = "avatar")
     private String avatar;
+
+    @Column(name = "is_blocked")
+    private Boolean isBlocked;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @Column(name = "is_blocked")
-    private Boolean isBlocked;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quizze_id")
-    private List<Quizze> quizzes;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Quizz> quizzes;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserWord> userWord;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Word> words;
 
     @Transient
     private String refreshToken;

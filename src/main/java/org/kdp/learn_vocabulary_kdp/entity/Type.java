@@ -1,14 +1,18 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
-@Entity
-@Table(name = "types")
-@Builder
+@Entity(name = "types")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,7 +23,7 @@ public class Type {
     @Column(name = "type_id")
     private String id;
 
-    private String type;
+    private String name;
 
     @OneToMany(mappedBy = "type")
     private List<WordType> wordTypes;

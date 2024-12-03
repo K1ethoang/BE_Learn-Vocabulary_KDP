@@ -1,14 +1,15 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
-@Entity
-@Table(name = "topics")
-@Builder
+@Entity(name = "topics")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,19 +20,16 @@ public class Topic extends Auditable {
     @Column(name = "topic_id")
     private String id;
 
-    private String name;
+    @Column(name = "title")
+    private String title;
 
+    @Column(name = "description")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "topic_word",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "word_id")
-    )
-    private List<Word> words;
+    @OneToMany(mappedBy = "topic")
+    private List<TopicWord> topicWords;
 }

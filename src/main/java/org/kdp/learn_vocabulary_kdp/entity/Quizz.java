@@ -1,23 +1,24 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-@Entity
-@Table(name = "quizzes")
-@Builder
+@Entity(name = "quizzes")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quizze {
+public class Quizz {
     @Id
     @UuidGenerator
-    @Column(name = "quizze_id")
+    @Column(name = "quizz_id")
     private String id;
 
     @Column(name = "total_questions")
@@ -28,9 +29,9 @@ public class Quizze {
 
     @CreatedDate
     @Column(name = "date_completed", nullable = false, updatable = false)
-    private LocalDateTime dateCompleted;
+    private Date dateCompleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 }
