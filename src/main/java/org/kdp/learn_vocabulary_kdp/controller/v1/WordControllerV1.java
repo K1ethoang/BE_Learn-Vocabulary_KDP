@@ -3,7 +3,7 @@ package org.kdp.learn_vocabulary_kdp.controller.v1;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
-import org.kdp.learn_vocabulary_kdp.model.DTO.word.WordDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.word.WordDto;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.impl.WordServiceImpl;
 import org.springframework.data.domain.PageRequest;

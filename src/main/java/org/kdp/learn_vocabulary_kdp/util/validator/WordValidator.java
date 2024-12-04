@@ -2,7 +2,7 @@ package org.kdp.learn_vocabulary_kdp.util.validator;
 
 import org.kdp.learn_vocabulary_kdp.exception.NotNullException;
 import org.kdp.learn_vocabulary_kdp.message.WordMessage;
-import org.kdp.learn_vocabulary_kdp.model.DTO.word.WordDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.word.WordDto;
 
 public class WordValidator {
     public static void notNullWord(String word) throws NotNullException {
