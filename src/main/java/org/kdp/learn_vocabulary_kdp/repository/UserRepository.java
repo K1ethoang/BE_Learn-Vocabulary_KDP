@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/09 - 01:44 AM (ICT)
+ * @LastModified: 2024/12/09 - 23:30 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.repository;
@@ -15,8 +15,4 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findByEmail(String email);
-
-    Boolean existsByEmail(String email);
-
-    User findUserByEmailAndPassword(String email, String password);
 }
