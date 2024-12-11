@@ -1,4 +1,4 @@
-package org.kdp.learn_vocabulary_kdp.model.DTO.paging;
+package org.kdp.learn_vocabulary_kdp.model.dto.paging;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;

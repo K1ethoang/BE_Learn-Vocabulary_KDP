@@ -1,15 +1,15 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
 
-@Entity
-@Table(name = "roles")
-@Builder
+import java.util.List;
+
+@Entity(name = "roles")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,5 +20,9 @@ public class Role {
     @Column(name = "role_id")
     private String id;
 
-    private String role;
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private List<User> users;
 }

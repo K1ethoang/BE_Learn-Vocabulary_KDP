@@ -1,4 +1,4 @@
-package org.kdp.learn_vocabulary_kdp.model.DTO.word;
+package org.kdp.learn_vocabulary_kdp.model.dto.word;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -11,10 +11,13 @@ import java.time.LocalDateTime;
 public class WordDto {
     @JsonIgnore
     private LocalDateTime createdAt;
+
     @JsonIgnore
     private LocalDateTime updatedAt;
+
     @JsonIgnore
     private Boolean isDeleted;
+
     @JsonIgnore
     private String id;
     private String word;

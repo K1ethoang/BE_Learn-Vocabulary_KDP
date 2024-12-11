@@ -1,7 +1,7 @@
 package org.kdp.learn_vocabulary_kdp.service.interfaces;
 
-import org.kdp.learn_vocabulary_kdp.model.DTO.paging.PageableDto;
-import org.kdp.learn_vocabulary_kdp.model.DTO.word.WordDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.paging.PageableDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.word.WordDto;
 import org.springframework.data.domain.Pageable;
 
 public interface WordService {

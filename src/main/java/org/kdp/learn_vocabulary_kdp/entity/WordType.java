@@ -1,31 +1,29 @@
 package org.kdp.learn_vocabulary_kdp.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.UuidGenerator;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.kdp.learn_vocabulary_kdp.entity.keys.IdWordType;
 
-@Entity
-@Table(name = "word_type")
-@Builder
-@Getter
-@Setter
+@Entity(name = "words_type")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class WordType {
     @Id
-    @UuidGenerator
-    @Column(name = "word_type_id")
-    private String id;
+    private IdWordType idWordType;
 
     @ManyToOne
-    @JoinColumn(name = "word_id")
+    @JoinColumn(name = "word_id", insertable = false, updatable = false)
     private Word word;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", insertable = false, updatable = false)
     private Type type;
-
-    private String definition;
-     
-    private String description;
 }
