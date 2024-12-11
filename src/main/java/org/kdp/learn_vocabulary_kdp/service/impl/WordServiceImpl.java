@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/08 - 01:31 AM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import lombok.AllArgsConstructor;
@@ -20,6 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class WordServiceImpl implements WordService {
     private final WordRepository wordRepository;
+    EntityToDto entityToDto;
 
     @Override
     public PageableDto getAllWords(Pageable pageable) {
@@ -27,7 +34,7 @@ public class WordServiceImpl implements WordService {
 
         List<Word> wordList = wordPage.getContent();
 
-        List<WordDto> content = wordList.stream().map(EntityToDto::wordDto).toList();
+        List<WordDto> content = wordList.stream().map(entityToDto::wordDto).toList();
 
         PageableDto pageableDto = new PageableDto(wordPage);
 
@@ -40,7 +47,7 @@ public class WordServiceImpl implements WordService {
     public WordDto getWordByUserId(String id) throws NotFoundException {
         Word wordFromDb = wordRepository.findById(id).orElseThrow(() -> new NotFoundException(WordMessage.NOT_FOUND));
 
-        return EntityToDto.wordDto(wordFromDb);
+        return entityToDto.wordDto(wordFromDb);
     }
 
     @Override

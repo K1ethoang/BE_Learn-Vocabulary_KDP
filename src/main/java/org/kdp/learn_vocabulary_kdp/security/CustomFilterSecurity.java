@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/09 - 23:50 PM (ICT)
+ * @LastModified: 2024/12/11 - 15:36 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.security;
@@ -9,8 +9,6 @@ package org.kdp.learn_vocabulary_kdp.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -27,12 +25,12 @@ public class CustomFilterSecurity {
     CustomUserDetailService customUserDetailService;
     CustomJwtFilter customJwtFilter;
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
-        return authenticationManagerBuilder.build();
-    }
+    //    @Bean
+    //    public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
+    //        AuthenticationManagerBuilder authenticationManagerBuilder = httpSecurity.getSharedObject(AuthenticationManagerBuilder.class);
+    //        authenticationManagerBuilder.userDetailsService(customUserDetailService).passwordEncoder(passwordEncoder());
+    //        return authenticationManagerBuilder.build();
+    //    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

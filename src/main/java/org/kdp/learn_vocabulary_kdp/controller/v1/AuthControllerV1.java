@@ -1,11 +1,12 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/10 - 00:01 AM (ICT)
+ * @LastModified: 2024/12/11 - 16:04 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
@@ -30,16 +31,13 @@ public class AuthControllerV1 {
     JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LoginDto loginDto) {
-        log.info("AuthControllerV1::login request body {}", loginDto);
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto) {
         authService.login(loginDto);
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(loginDto.getEmail()));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody RegisterDto registerDto) {
-        log.info("AuthControllerV1::register request body {}", registerDto);
-        authService.register(registerDto);
-        return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, null);
+    public ResponseEntity<Object> register(@Valid @RequestBody RegisterDto registerDto) {
+        return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, authService.register(registerDto));
     }
 }

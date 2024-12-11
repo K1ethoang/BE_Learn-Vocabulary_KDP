@@ -1,9 +1,19 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/11 - 22:56 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "users")
@@ -12,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends Auditable {
+public class User extends Auditable implements UserDetails {
     @Id
     @UuidGenerator
     @Column(name = "user_id")
@@ -22,6 +32,7 @@ public class User extends Auditable {
     private String fullName;
 
     @Column(name = "password")
+    @JsonIgnore
     private String password;
 
     @Column(name = "email")
@@ -46,12 +57,33 @@ public class User extends Auditable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Word> words;
 
-    @Transient
-    private String refreshToken;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 
-    @Transient
-    private String accessToken;
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-    @Transient
-    private String expRefreshToken;
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return isBlocked;
+    }
 }
