@@ -1,9 +1,17 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/11 - 15:42 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,18 +23,23 @@ public class GlobalExceptionHandler {
         return ApiResponse.responseError(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundException e) {
-        return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
-    }
-
     @ExceptionHandler(InvalidException.class)
     public ResponseEntity<ErrorResponse> handlerInvalidException(InvalidException e) {
         return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
     }
 
     @ExceptionHandler(NotNullException.class)
-    public ResponseEntity<ErrorResponse> handlerNotNullException(NotFoundException e) {
+    public ResponseEntity<ErrorResponse> handlerNotNullException(NotNullException e) {
         return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlerNotFoundException(NotFoundException e) {
+        return ApiResponse.responseError(e.getHttpStatus(), e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handlerInvalidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        return ApiResponse.responseError(e.getStatusCode(), e.getAllErrors().get(0).getDefaultMessage());
     }
 }

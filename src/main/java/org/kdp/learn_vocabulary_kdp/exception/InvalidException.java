@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/11 - 14:55 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.exception;
 
 import lombok.AllArgsConstructor;
