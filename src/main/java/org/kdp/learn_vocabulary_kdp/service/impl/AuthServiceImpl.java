@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 16:07 PM (ICT)
+ * @LastModified: 2024/12/12 - 14:53 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
@@ -27,12 +27,14 @@ public class AuthServiceImpl implements AuthService {
     EntityToDto entityToDto;
 
     @Override
-    public void login(LoginDto loginDto) throws InvalidException {
+    public UserDto login(LoginDto loginDto) throws InvalidException {
         User user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT));
 
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
             throw new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT);
         }
+
+        return entityToDto.userDto(user);
     }
 
     @Override

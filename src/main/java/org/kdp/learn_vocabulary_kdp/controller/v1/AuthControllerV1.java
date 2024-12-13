@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 16:04 PM (ICT)
+ * @LastModified: 2024/12/12 - 14:53 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.model.dto.auth.LoginDto;
 import org.kdp.learn_vocabulary_kdp.model.dto.auth.RegisterDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.AuthService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
@@ -32,8 +33,8 @@ public class AuthControllerV1 {
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto) {
-        authService.login(loginDto);
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(loginDto.getEmail()));
+        UserDto userDto = authService.login(loginDto);
+        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(userDto));
     }
 
     @PostMapping("/register")

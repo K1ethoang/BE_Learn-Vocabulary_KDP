@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/10 - 00:46 AM (ICT)
+ * @LastModified: 2024/12/13 - 22:32 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.security;
@@ -24,12 +24,11 @@ import java.util.ArrayList;
 @Component
 @AllArgsConstructor
 public class CustomJwtFilter extends OncePerRequestFilter {
-    private final String PREFIX_BEARER = "Bearer ";
     JwtService jwtService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getTokenFromHeader(request);
+        String token = jwtService.getTokenFromRequest(request);
 
         if (token != null) {
             if (jwtService.isTokenValid(token)) {
@@ -42,14 +41,5 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromHeader(HttpServletRequest request) {
-        final String authHeader = request.getHeader("Authorization");
-        String token = null;
 
-        if (authHeader != null && authHeader.startsWith(PREFIX_BEARER)) {
-            token = authHeader.substring(PREFIX_BEARER.length());
-        }
-
-        return token;
-    }
 }
