@@ -1,19 +1,20 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 15:42 PM (ICT)
+ * @LastModified: 2024/12/14 - 21:34 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -39,7 +40,18 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handlerInvalidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handlerInvalidException(MethodArgumentNotValidException e) {
         return ApiResponse.responseError(e.getStatusCode(), e.getAllErrors().get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handlerAccessDeniedException(AccessDeniedException e) {
+        return ApiResponse.responseError(HttpStatus.FORBIDDEN, "You do not have permission to access this resource");
+    }
+
+
+    @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
+    public ResponseEntity<ErrorResponse> handlerUnauthorizedException(HttpClientErrorException.Unauthorized e) {
+        return ApiResponse.responseError(HttpStatus.UNAUTHORIZED, e.getMessage());
     }
 }
