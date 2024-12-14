@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 11:37 AM (ICT)
+ * @LastModified: 2024/12/14 - 20:36 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.model.mapper;
@@ -21,11 +21,11 @@ import org.springframework.stereotype.Component;
 public class TopicMapper {
     ModelMapper modelMapper;
 
-    public Topic toEntity(TopicCreationRequest topicCreationRequest) {
+    public Topic toTopic(TopicCreationRequest topicCreationRequest) {
         return modelMapper.map(topicCreationRequest, Topic.class);
     }
 
-    public TopicResponse toDto(Topic topic) {
+    public TopicResponse toTopicResponse(Topic topic) {
         return modelMapper.map(topic, TopicResponse.class);
     }
 }

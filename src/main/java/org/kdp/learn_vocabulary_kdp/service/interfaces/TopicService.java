@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 11:32 AM (ICT)
+ * @LastModified: 2024/12/14 - 20:37 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.interfaces;
@@ -16,7 +16,7 @@ import java.util.List;
 public interface TopicService {
     List<TopicResponse> getTopics();
 
-    PageableDto getTopicsByUserId(Pageable pageable, String userId);
+    PageableDto getTopicsByUserId(Pageable pageable);
 
-    TopicResponse createTopic(TopicCreationRequest topicCreationRequest, String userId);
+    TopicResponse createTopic(TopicCreationRequest topicCreationRequest);
 }

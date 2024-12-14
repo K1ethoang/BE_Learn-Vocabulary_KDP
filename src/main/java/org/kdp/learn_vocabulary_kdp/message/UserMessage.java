@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 11:53 AM (ICT)
+ * @LastModified: 2024/12/14 - 20:44 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.message;
@@ -14,6 +14,7 @@ public class UserMessage {
 
     //    Required
     public static final String EMAIL_REQUIRED = "Email is required";
+    public static final String USER_ID_REQUIRED = "User_id is required";
     public static final String PASSWORD_REQUIRED = "Password is required";
     public static final String FULLNAME_REQUIRED = "Full_name is required";
 
@@ -26,4 +27,5 @@ public class UserMessage {
 
     public static final String EMAIL_PASSWORD_INCORRECT = "Email or password is incorrect";
     public static final String EMAIL_EXIST = "Email is already exist";
+    public static final String USER_NOT_FOUND = "User not found";
 }

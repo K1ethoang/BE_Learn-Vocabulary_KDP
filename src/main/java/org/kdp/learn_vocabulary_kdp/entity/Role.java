@@ -1,10 +1,14 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/14 - 19:42 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
@@ -14,15 +18,17 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 public class Role {
     @Id
     @UuidGenerator
     @Column(name = "role_id")
-    private String id;
+    String id;
 
     @Column(name = "name")
-    private String name;
+    String name;
 
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private List<User> users;
+    List<User> users;
 }

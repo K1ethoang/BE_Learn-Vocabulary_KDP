@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/14 - 19:19 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp;
 
 import org.springframework.boot.SpringApplication;
