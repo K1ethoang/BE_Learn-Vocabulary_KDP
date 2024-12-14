@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/13 - 22:58 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:28 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
-import org.kdp.learn_vocabulary_kdp.model.dto.topic.TopicDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
@@ -40,9 +40,9 @@ public class TopicControllerV1 {
     }
 
     @PostMapping("")
-    public ResponseEntity<Object> createTopic(@Valid @RequestBody TopicDto topicDto, HttpServletRequest request) {
+    public ResponseEntity<Object> createTopic(@Valid @RequestBody TopicCreationRequest topicCreationRequest, HttpServletRequest request) {
         String userId = jwtService.getUserIdFromRequest(request);
 
-        return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicDto, userId));
+        return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicCreationRequest, userId));
     }
 }

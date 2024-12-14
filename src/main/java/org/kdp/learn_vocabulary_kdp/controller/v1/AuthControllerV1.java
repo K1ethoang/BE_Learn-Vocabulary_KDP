@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/12 - 14:53 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:47 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -10,9 +10,9 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
-import org.kdp.learn_vocabulary_kdp.model.dto.auth.LoginDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.auth.RegisterDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.auth.LoginRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.auth.RegisterDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserDto;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.AuthService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
@@ -32,8 +32,8 @@ public class AuthControllerV1 {
     JwtService jwtService;
 
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@Valid @RequestBody LoginDto loginDto) {
-        UserDto userDto = authService.login(loginDto);
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) {
+        UserDto userDto = authService.login(request);
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(userDto));
     }
 

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/13 - 23:22 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:38 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
@@ -14,8 +14,9 @@ import org.kdp.learn_vocabulary_kdp.entity.User;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.message.TopicMessage;
 import org.kdp.learn_vocabulary_kdp.model.dto.paging.PageableDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.topic.TopicDto;
-import org.kdp.learn_vocabulary_kdp.model.mapper.EntityToDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
+import org.kdp.learn_vocabulary_kdp.model.mapper.TopicMapper;
 import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.UserService;
@@ -33,10 +34,10 @@ import java.util.List;
 public class TopicServiceImpl implements TopicService {
     UserService userService;
     TopicRepository topicRepository;
-    EntityToDto entityToDto;
+    TopicMapper topicMapper;
 
     @Override
-    public List<TopicDto> getTopics() {
+    public List<TopicResponse> getTopics() {
         return List.of();
     }
 
@@ -46,7 +47,7 @@ public class TopicServiceImpl implements TopicService {
 
         List<Topic> topicList = topicPage.getContent();
 
-        List<TopicDto> content = topicList.stream().map(entityToDto::topicDto).toList();
+        List<TopicResponse> content = topicList.stream().map(topicMapper::toDto).toList();
 
         PageableDto pageableDto = new PageableDto(topicPage);
 
@@ -56,17 +57,16 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public TopicDto createTopic(TopicDto topicDto, String userId) throws InvalidException {
+    public TopicResponse createTopic(TopicCreationRequest topicCreationRequest, String userId) throws InvalidException {
         // todo: hiện tại chưa làm thêm words chung với topic
-        if (topicRepository.existsTopicByTitle(topicDto.getTitle())) {
+        if (topicRepository.existsTopicByTitle(topicCreationRequest.getTitle())) {
             throw new InvalidException(TopicMessage.TOPIC_EXIST);
         }
 
-        User user = User.builder().id(userId).build();
-
-        Topic topic = Topic.builder().title(topicDto.getTitle()).description(topicDto.getDescription()).user(user).build();
+        Topic topic = topicMapper.toEntity(topicCreationRequest);
+        topic.setUser(User.builder().id(userId).build());
 
         Topic topicCreated = topicRepository.save(topic);
-        return entityToDto.topicDto(topicCreated);
+        return topicMapper.toDto(topicCreated);
     }
 }

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 23:48 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:47 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.model.mapper;
@@ -10,8 +10,8 @@ import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.entity.Topic;
 import org.kdp.learn_vocabulary_kdp.entity.User;
 import org.kdp.learn_vocabulary_kdp.entity.Word;
-import org.kdp.learn_vocabulary_kdp.model.dto.topic.TopicDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserDto;
 import org.kdp.learn_vocabulary_kdp.model.dto.word.WordDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -29,7 +29,7 @@ public class EntityToDto {
         return mapper.map(user, UserDto.class);
     }
 
-    public TopicDto topicDto(Topic topic) {
-        return mapper.map(topic, TopicDto.class);
+    public TopicCreationRequest topicDto(Topic topic) {
+        return mapper.map(topic, TopicCreationRequest.class);
     }
 }

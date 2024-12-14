@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/12 - 14:53 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:47 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
@@ -10,9 +10,9 @@ import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.entity.User;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.message.UserMessage;
-import org.kdp.learn_vocabulary_kdp.model.dto.auth.LoginDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.auth.RegisterDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.auth.LoginRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.auth.RegisterDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserDto;
 import org.kdp.learn_vocabulary_kdp.model.mapper.EntityToDto;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.AuthService;
@@ -27,10 +27,10 @@ public class AuthServiceImpl implements AuthService {
     EntityToDto entityToDto;
 
     @Override
-    public UserDto login(LoginDto loginDto) throws InvalidException {
-        User user = userRepository.findByEmail(loginDto.getEmail()).orElseThrow(() -> new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT));
+    public UserDto login(LoginRequest request) throws InvalidException {
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT));
 
-        if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT);
         }
 

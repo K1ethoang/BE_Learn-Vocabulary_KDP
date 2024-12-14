@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/13 - 22:54 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:47 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
@@ -11,7 +11,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserDto;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

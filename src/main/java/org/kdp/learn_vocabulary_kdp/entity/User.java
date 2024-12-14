@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 22:56 PM (ICT)
+ * @LastModified: 2024/12/13 - 21:58 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;

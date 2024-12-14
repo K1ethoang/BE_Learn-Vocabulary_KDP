@@ -1,12 +1,11 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 15:42 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:22 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -39,7 +38,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handlerInvalidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorResponse> handlerInvalidException(MethodArgumentNotValidException e) {
         return ApiResponse.responseError(e.getStatusCode(), e.getAllErrors().get(0).getDefaultMessage());
     }
 }
