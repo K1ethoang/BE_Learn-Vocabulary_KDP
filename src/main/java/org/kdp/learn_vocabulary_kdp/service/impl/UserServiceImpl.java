@@ -1,36 +1,104 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/08 - 01:31 AM (ICT)
+ * @LastModified: 2024/12/14 - 21:24 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.kdp.learn_vocabulary_kdp.entity.Role;
 import org.kdp.learn_vocabulary_kdp.entity.User;
-import org.kdp.learn_vocabulary_kdp.model.dto.user.UserDto;
-import org.kdp.learn_vocabulary_kdp.model.mapper.EntityToDto;
+import org.kdp.learn_vocabulary_kdp.enums.ERole;
+import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
+import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
+import org.kdp.learn_vocabulary_kdp.message.UserMessage;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.user.UserCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.user.UserUpdateRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserResponse;
+import org.kdp.learn_vocabulary_kdp.model.mapper.UserMapper;
+import org.kdp.learn_vocabulary_kdp.repository.RoleRepository;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
+    PasswordEncoder passwordEncoder;
     UserRepository userRepository;
-    EntityToDto entityToDto;
+    UserMapper userMapper;
+    RoleRepository roleRepository;
 
     @Override
-    public List<UserDto> getUsers() {
+    public List<UserResponse> getUsers() {
         List<User> users = userRepository.findAll();
 
-        List<UserDto> userDtos = new ArrayList<>();
+        List<UserResponse> userResponses = new ArrayList<>();
 
-        users.forEach(user -> userDtos.add(entityToDto.userDto(user)));
+        users.forEach(user -> userResponses.add(userMapper.toUserResponse(user)));
 
-        return userDtos;
+        return userResponses;
+    }
+
+    @Override
+    public UserResponse getUserById(String userId) throws NotFoundException {
+        return userMapper.toUserResponse(userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND)));
+    }
+
+    @Override
+    public UserResponse createUser(UserCreationRequest userCreationRequest) throws InvalidException {
+        if (userRepository.existsUserByEmail(userCreationRequest.getEmail())) {
+            throw new InvalidException(UserMessage.EMAIL_EXIST);
+        }
+
+        User user = userMapper.toUser(userCreationRequest);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setIsBlocked(false);
+
+        Role role = roleRepository.findByName(ERole.USER.getName());
+        role.setName(ERole.USER.getName());
+        user.setRole(role);
+
+        userRepository.save(user);
+
+        return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public UserResponse updateUser(UserUpdateRequest userUpdateRequest, String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+
+        userMapper.updateUser(userUpdateRequest, user);
+
+        userRepository.save(user);
+
+        return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public void deleteUser(String userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+
+        userRepository.delete(user);
+    }
+
+    @Override
+    public UserResponse getMyInfo() throws NotFoundException {
+        User user = userRepository.findByEmail(getNameFromContext()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+
+        return userMapper.toUserResponse(user);
+    }
+
+    private String getNameFromContext() {
+        var context = SecurityContextHolder.getContext();
+        return context.getAuthentication().getName();
     }
 }

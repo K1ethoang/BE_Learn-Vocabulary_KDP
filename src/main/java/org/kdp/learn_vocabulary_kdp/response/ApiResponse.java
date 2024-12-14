@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/11 - 14:59 PM (ICT)
+ * @LastModified: 2024/12/14 - 11:44 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.response;
@@ -17,7 +17,7 @@ public class ApiResponse {
         Map<String, Object> response = new HashMap<>();
         response.put("status", httpStatus.value());
         response.put("message", message);
-        response.put("data", responseObject);
+        response.put("result", responseObject);
 
         return new ResponseEntity<>(response, httpStatus);
     }
