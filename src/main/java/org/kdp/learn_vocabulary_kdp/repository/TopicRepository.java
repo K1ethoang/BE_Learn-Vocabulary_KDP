@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TopicRepository extends JpaRepository<Topic, String> {
-    boolean existsTopicByTitle(String title);
+    boolean existsTopicByTitleAndUser_Id(String title, String userId);
 
     Page<Topic> findAllByUserId(String userId, Pageable pageable);
 

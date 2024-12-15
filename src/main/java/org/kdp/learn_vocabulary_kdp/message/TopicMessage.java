@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 11:55 AM (ICT)
+ * @LastModified: 2024/12/15 - 15:08 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.message;
@@ -19,4 +19,5 @@ public class TopicMessage {
     public static final String DESC_LENGTH = "Description's length is max " + DESC_MAX_LENGTH + " characters";
 
     public static final String TOPIC_EXIST = "Topic is already exist";
+    public static final String TOPIC_NOT_FOUND = "Topic is not found";
 }

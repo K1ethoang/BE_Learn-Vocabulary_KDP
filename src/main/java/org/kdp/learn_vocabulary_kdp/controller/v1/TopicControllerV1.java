@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:05 PM (ICT)
+ * @LastModified: 2024/12/15 - 15:14 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
 import org.springframework.data.domain.PageRequest;
@@ -38,5 +39,10 @@ public class TopicControllerV1 {
     @PostMapping("")
     public ResponseEntity<Object> createTopic(@Valid @RequestBody TopicCreationRequest topicCreationRequest) {
         return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicCreationRequest));
+    }
+
+    @PutMapping("/{topicId}")
+    public ResponseEntity<Object> updateTopic(@Valid @RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
+        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
     }
 }

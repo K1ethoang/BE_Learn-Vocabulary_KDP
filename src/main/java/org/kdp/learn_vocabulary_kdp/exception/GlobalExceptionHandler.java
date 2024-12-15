@@ -1,11 +1,12 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:34 PM (ICT)
+ * @LastModified: 2024/12/15 - 16:18 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.exception;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -45,8 +46,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handlerAccessDeniedException(AccessDeniedException e) {
-        return ApiResponse.responseError(HttpStatus.FORBIDDEN, "You do not have permission to access this resource");
+    public ResponseEntity<ErrorResponse> handlerAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
+        return ApiResponse.responseError(HttpStatus.FORBIDDEN, "You do not have permission to access this resource: " + request.getServletPath());
     }
 
 

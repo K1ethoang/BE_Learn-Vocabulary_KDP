@@ -1,22 +1,19 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 19:09 PM (ICT)
+ * @LastModified: 2024/12/15 - 16:01 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.model.dto.response.topic;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.kdp.learn_vocabulary_kdp.entity.TopicWord;
 
 import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -34,7 +31,4 @@ public class TopicResponse {
     String title;
 
     String description;
-
-    @JsonProperty("word_list")
-    private List<TopicWord> topicWords;
 }
