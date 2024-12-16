@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 16:55 PM (ICT)
+ * @LastModified: 2024/12/16 - 17:52 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
@@ -41,4 +41,8 @@ public class Quizz {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topic_id")
+    private Topic topic;
 }

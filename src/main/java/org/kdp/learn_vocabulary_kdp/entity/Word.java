@@ -1,16 +1,14 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 16:50 PM (ICT)
+ * @LastModified: 2024/12/16 - 18:33 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
@@ -21,22 +19,32 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Word {
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Word extends Auditable {
     @Id
     @UuidGenerator
     @Column(name = "word_id")
-    private String id;
+    String id;
 
     @Column(name = "name")
-    private String name;
+    String name;
+
+    @Column(name = "pronounce")
+    String pronounce;
+
+    @Column(name = "meaning")
+    String meaning;
+
+    @Column(name = "example", columnDefinition = "TEXT")
+    String example;
+
+    @Column(name = "Has_Remembered")
+    Boolean hasRemembered;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "topic_id")
+    Topic topic;
 
     @OneToMany(mappedBy = "word")
-    private List<TopicWord> topicWords;
-
-    @OneToMany(mappedBy = "word")
-    private List<WordType> wordTypes;
+    List<WordType> wordTypes;
 }

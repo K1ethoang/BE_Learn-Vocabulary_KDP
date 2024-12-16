@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 18:59 PM (ICT)
+ * @LastModified: 2024/12/16 - 18:33 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
@@ -50,7 +50,4 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Quizz> quizzes;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Word> words;
 }
