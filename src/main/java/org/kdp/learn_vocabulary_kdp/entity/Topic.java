@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/13 - 23:11 PM (ICT)
+ * @LastModified: 2024/12/16 - 16:48 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
@@ -28,7 +28,7 @@ public class Topic extends Auditable {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)

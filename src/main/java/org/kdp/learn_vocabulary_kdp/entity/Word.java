@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 12:45 PM (ICT)
+ * @LastModified: 2024/12/16 - 16:50 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
@@ -21,7 +21,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Word extends Auditable {
+public class Word {
     @Id
     @UuidGenerator
     @Column(name = "word_id")
