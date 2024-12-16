@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/16 - 12:45 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
@@ -12,7 +18,7 @@ import org.kdp.learn_vocabulary_kdp.entity.keys.IdTopicWord;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TopicWord {
+public class TopicWord extends Auditable {
     @Id
     private IdTopicWord idTopicWord;
 
@@ -24,6 +30,9 @@ public class TopicWord {
 
     @Column(name = "has_remembered")
     private Boolean hasRemembered;
+
+    @Column(name = "pronounce")
+    private String pronounce;
 
     @ManyToOne
     @JoinColumn(name = "topic_id", insertable = false, updatable = false)

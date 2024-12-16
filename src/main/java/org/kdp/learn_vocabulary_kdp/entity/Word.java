@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/16 - 12:45 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.*;
@@ -23,9 +29,6 @@ public class Word extends Auditable {
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "pronounce")
-    private String pronounce;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

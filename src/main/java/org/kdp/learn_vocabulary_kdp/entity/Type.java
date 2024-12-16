@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/16 - 12:52 PM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.entity;
 
 import jakarta.persistence.Column;
@@ -24,6 +30,8 @@ public class Type {
     private String id;
 
     private String name;
+    
+    private String symbol;
 
     @OneToMany(mappedBy = "type")
     private List<WordType> wordTypes;
