@@ -1,3 +1,9 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/18 - 01:28 AM (ICT)
+ ************************************************/
+
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
 import lombok.AllArgsConstructor;
@@ -27,27 +33,27 @@ public class WordControllerV1 {
     public ResponseEntity<Object> getAllWords(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_SORT_BY) String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
 
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getAllWords(pageable));
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getAllWords(pageable));
     }
 
     @GetMapping("/{userId}")
     public ResponseEntity<Object> getWordByUserId(@PathVariable String userId) {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getWordByUserId(userId));
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.getWordByUserId(userId));
     }
 
     @PostMapping("")
     public ResponseEntity<Object> createWord(@RequestBody WordDto wordDto) {
-        return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, wordService.createWord(wordDto));
+        return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, wordService.createWord(wordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateWord(@PathVariable String id, @RequestBody WordDto wordDto) {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.updateWord(id, wordDto));
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, wordService.updateWord(id, wordDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteWord(@PathVariable String id) {
         wordService.deleteWord(id);
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
     }
 }

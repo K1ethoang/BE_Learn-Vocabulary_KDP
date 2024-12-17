@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:16 PM (ICT)
+ * @LastModified: 2024/12/18 - 01:28 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -26,29 +26,29 @@ public class UserControllerV1 {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("")
     public ResponseEntity<Object> getUsers() {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUsers());
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUsers());
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{userId}")
     public ResponseEntity<Object> getUserById(@PathVariable("userId") String userId) {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUserById(userId));
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUserById(userId));
     }
 
     @PutMapping("{userId}")
     public ResponseEntity<Object> updateUser(@Valid @RequestBody UserUpdateRequest userUpdateRequest, @PathVariable("userId") String userId) {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.updateUser(userUpdateRequest, userId));
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.updateUser(userUpdateRequest, userId));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("{userId}")
     public ResponseEntity<Object> deleteUser(@PathVariable("userId") String userId) {
         userService.deleteUser(userId);
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
     }
 
     @GetMapping("/my-info")
     public ResponseEntity<Object> getMyInfo() {
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getMyInfo());
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getMyInfo());
     }
 }
