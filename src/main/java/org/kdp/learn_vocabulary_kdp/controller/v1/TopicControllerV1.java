@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/15 - 15:14 PM (ICT)
+ * @LastModified: 2024/12/17 - 22:08 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -24,13 +24,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 public class TopicControllerV1 {
-    private static final String DEFAULT_PAGE_SIZE = "10";
+    private static final String DEFAULT_PAGE_SIZE = "5";
     private static final String DEFAULT_PAGE_NO = "0";
-    private static final String DEFAULT_SORT_BY = "updatedAt";
+    private static final String DEFAULT_TOPIC_SORT_BY = "updatedAt";
     TopicService topicService;
 
     @GetMapping("")
-    public ResponseEntity<Object> getTopics(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_SORT_BY) String sortBy) {
+    public ResponseEntity<Object> getTopics(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_TOPIC_SORT_BY) String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
 
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getTopicsByUserId(pageable));
@@ -42,7 +42,14 @@ public class TopicControllerV1 {
     }
 
     @PutMapping("/{topicId}")
-    public ResponseEntity<Object> updateTopic(@Valid @RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
+    public ResponseEntity<Object> updateTopic(@RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
+    }
+
+    @GetMapping("/{topicId}/words")
+    public ResponseEntity<Object> getAllWords(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @PathVariable String topicId) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+
+        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getWordsByTopic(pageable, topicId));
     }
 }

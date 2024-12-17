@@ -1,11 +1,12 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/15 - 16:39 PM (ICT)
+ * @LastModified: 2024/12/17 - 22:42 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,7 +22,6 @@ import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.TopicMapper;
-import org.kdp.learn_vocabulary_kdp.model.mapper.UserMapper;
 import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
@@ -40,7 +40,6 @@ import java.util.Optional;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TopicServiceImpl implements TopicService {
     ContextHolderUtil contextHolderUtil;
-    UserMapper userMapper;
     UserRepository userRepository;
     TopicRepository topicRepository;
     TopicMapper topicMapper;
@@ -93,7 +92,7 @@ public class TopicServiceImpl implements TopicService {
      * @hidden Auto get userId from Context Holder to checks
      */
     @Override
-    public TopicResponse updateTopic(TopicUpdateRequest topicUpdateRequest, String topicId) throws NotFoundException {
+    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId) throws NotFoundException {
         Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
 
         String userId = contextHolderUtil.getUserIdFromContext();
@@ -102,10 +101,20 @@ public class TopicServiceImpl implements TopicService {
             throw new AccessDeniedException("");
         }
 
-        // TODO: check data not empty
         topicMapper.updateTopic(topicUpdateRequest, topic);
 
-        topic = topicRepository.save(topic);
+        topicRepository.save(topic);
         return topicMapper.toTopicResponse(topic);
+    }
+
+    /**
+     * @hidden Auto get userId from Context Holder to checks
+     */
+    @Override
+    public PageableDto getWordsByTopic(Pageable pageable, String topicId) {
+        String userId = contextHolderUtil.getUserIdFromContext();
+
+
+        return null;
     }
 }
