@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/13 - 23:13 PM (ICT)
+ * @LastModified: 2024/12/18 - 00:41 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.repository;
@@ -17,5 +17,4 @@ public interface TopicRepository extends JpaRepository<Topic, String> {
     boolean existsTopicByTitleAndUser_Id(String title, String userId);
 
     Page<Topic> findAllByUserId(String userId, Pageable pageable);
-
 }

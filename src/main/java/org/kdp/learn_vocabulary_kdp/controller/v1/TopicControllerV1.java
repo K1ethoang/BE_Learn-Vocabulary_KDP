@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/17 - 22:08 PM (ICT)
+ * @LastModified: 2024/12/18 - 00:41 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -44,12 +44,5 @@ public class TopicControllerV1 {
     @PutMapping("/{topicId}")
     public ResponseEntity<Object> updateTopic(@RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
-    }
-
-    @GetMapping("/{topicId}/words")
-    public ResponseEntity<Object> getAllWords(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @PathVariable String topicId) {
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
-
-        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getWordsByTopic(pageable, topicId));
     }
 }

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 17:52 PM (ICT)
+ * @LastModified: 2024/12/16 - 19:02 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.entity;
@@ -35,7 +35,7 @@ public class Quizz {
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "complete_at", nullable = false, updatable = false)
+    @Column(name = "completed_at", nullable = false, updatable = false)
     private Date completedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
