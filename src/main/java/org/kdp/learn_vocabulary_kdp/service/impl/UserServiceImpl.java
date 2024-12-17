@@ -1,13 +1,14 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:24 PM (ICT)
+ * @LastModified: 2024/12/15 - 15:22 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kdp.learn_vocabulary_kdp.Util.ContextHolderUtil;
 import org.kdp.learn_vocabulary_kdp.entity.Role;
 import org.kdp.learn_vocabulary_kdp.entity.User;
 import org.kdp.learn_vocabulary_kdp.enums.ERole;
@@ -21,7 +22,6 @@ import org.kdp.learn_vocabulary_kdp.model.mapper.UserMapper;
 import org.kdp.learn_vocabulary_kdp.repository.RoleRepository;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
     UserMapper userMapper;
     RoleRepository roleRepository;
+    ContextHolderUtil contextHolderUtil;
 
     @Override
     public List<UserResponse> getUsers() {
@@ -92,13 +93,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getMyInfo() throws NotFoundException {
-        User user = userRepository.findByEmail(getNameFromContext()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+        User user = userRepository.findByEmail(contextHolderUtil.getNameFromContext()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
 
         return userMapper.toUserResponse(user);
-    }
-
-    private String getNameFromContext() {
-        var context = SecurityContextHolder.getContext();
-        return context.getAuthentication().getName();
     }
 }

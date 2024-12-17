@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:05 PM (ICT)
+ * @LastModified: 2024/12/18 - 00:41 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.controller.v1;
@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
 import org.springframework.data.domain.PageRequest;
@@ -23,13 +24,13 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @AllArgsConstructor
 public class TopicControllerV1 {
-    private static final String DEFAULT_PAGE_SIZE = "10";
+    private static final String DEFAULT_PAGE_SIZE = "5";
     private static final String DEFAULT_PAGE_NO = "0";
-    private static final String DEFAULT_SORT_BY = "updatedAt";
+    private static final String DEFAULT_TOPIC_SORT_BY = "updatedAt";
     TopicService topicService;
 
     @GetMapping("")
-    public ResponseEntity<Object> getTopics(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_SORT_BY) String sortBy) {
+    public ResponseEntity<Object> getTopics(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_TOPIC_SORT_BY) String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
 
         return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getTopicsByUserId(pageable));
@@ -38,5 +39,10 @@ public class TopicControllerV1 {
     @PostMapping("")
     public ResponseEntity<Object> createTopic(@Valid @RequestBody TopicCreationRequest topicCreationRequest) {
         return ApiResponse.responseBuilder(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicCreationRequest));
+    }
+
+    @PutMapping("/{topicId}")
+    public ResponseEntity<Object> updateTopic(@RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
+        return ApiResponse.responseBuilder(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
     }
 }

@@ -18,11 +18,11 @@ import org.kdp.learn_vocabulary_kdp.jackson.TrimDeserializer;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.message.TopicMessage;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TopicCreationRequest {
+public class TopicUpdateRequest {
     @NotBlank(message = GlobalMessage.REQUIRED)
     @Size(min = TopicMessage.TITLE_MIN_LENGTH, max = TopicMessage.TITLE_MAX_LENGTH, message = TopicMessage.TITLE_LENGTH)
     @JsonDeserialize(using = TrimDeserializer.class)

@@ -1,41 +1,45 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 20:53 PM (ICT)
+ * @LastModified: 2024/12/17 - 22:42 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
-import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.kdp.learn_vocabulary_kdp.Util.ContextHolderUtil;
 import org.kdp.learn_vocabulary_kdp.entity.Topic;
 import org.kdp.learn_vocabulary_kdp.entity.User;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
 import org.kdp.learn_vocabulary_kdp.message.TopicMessage;
-import org.kdp.learn_vocabulary_kdp.message.UserMessage;
 import org.kdp.learn_vocabulary_kdp.model.dto.paging.PageableDto;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.TopicMapper;
-import org.kdp.learn_vocabulary_kdp.model.mapper.UserMapper;
 import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-@Transactional
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TopicServiceImpl implements TopicService {
-    UserMapper userMapper;
+    ContextHolderUtil contextHolderUtil;
     UserRepository userRepository;
     TopicRepository topicRepository;
     TopicMapper topicMapper;
@@ -45,9 +49,13 @@ public class TopicServiceImpl implements TopicService {
         return List.of();
     }
 
+    /**
+     * @hidden Auto get userId from Context Holder to checks
+     */
     @Override
     public PageableDto getTopicsByUserId(Pageable pageable) {
-        Page<Topic> topicPage = topicRepository.findAll(pageable);
+        String userId = contextHolderUtil.getUserIdFromContext();
+        Page<Topic> topicPage = topicRepository.findAllByUserId(userId, pageable);
 
         List<Topic> topicList = topicPage.getContent();
 
@@ -60,20 +68,53 @@ public class TopicServiceImpl implements TopicService {
         return pageableDto;
     }
 
+    /**
+     * @hidden Auto get userId from Context Holder to checks
+     */
     @Override
     public TopicResponse createTopic(TopicCreationRequest topicCreationRequest) throws InvalidException, NotFoundException {
-        // todo: hiện tại chưa làm thêm words chung với topic
-        if (topicRepository.existsTopicByTitle(topicCreationRequest.getTitle())) {
+        String userId = contextHolderUtil.getUserIdFromContext();
+
+        if (topicRepository.existsTopicByTitleAndUser_Id(topicCreationRequest.getTitle(), userId)) {
             throw new InvalidException(TopicMessage.TOPIC_EXIST);
         }
 
-        User user = userRepository.findById(topicCreationRequest.getUserId()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
-
+        Optional<User> user = userRepository.findById(userId);
         Topic topic = topicMapper.toTopic(topicCreationRequest);
 
-        topic.setUser(user);
+        user.ifPresent(topic::setUser);
 
         Topic topicCreated = topicRepository.save(topic);
         return topicMapper.toTopicResponse(topicCreated);
+    }
+
+    /**
+     * @hidden Auto get userId from Context Holder to checks
+     */
+    @Override
+    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId) throws NotFoundException {
+        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
+
+        String userId = contextHolderUtil.getUserIdFromContext();
+        // Check topic belong to this user
+        if (!userId.equals(topic.getUser().getId())) {
+            throw new AccessDeniedException("");
+        }
+
+        topicMapper.updateTopic(topicUpdateRequest, topic);
+
+        topicRepository.save(topic);
+        return topicMapper.toTopicResponse(topic);
+    }
+
+    /**
+     * @hidden Auto get userId from Context Holder to checks
+     */
+    @Override
+    public PageableDto getWordsByTopic(Pageable pageable, String topicId) {
+        String userId = contextHolderUtil.getUserIdFromContext();
+
+
+        return null;
     }
 }
