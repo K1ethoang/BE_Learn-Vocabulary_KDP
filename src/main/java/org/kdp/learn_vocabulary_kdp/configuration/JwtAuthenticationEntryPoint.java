@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/17 - 23:46 PM (ICT)
+ * @LastModified: 2024/12/18 - 02:07 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.configuration;
@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        ResponseEntity<ErrorResponse> apiResponse = ApiResponse.responseError(HttpStatus.UNAUTHORIZED, "Unauthenticated");
+        ResponseEntity<ErrorResponse> apiResponse = ApiResponse.createErrorResponse(HttpStatus.UNAUTHORIZED, GlobalMessage.AUTHENTICATED);
 
         ObjectMapper mapper = new ObjectMapper();
 

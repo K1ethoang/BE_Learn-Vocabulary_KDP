@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 17:42 PM (ICT)
+ * @LastModified: 2024/12/18 - 01:01 AM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.configuration;
@@ -40,7 +40,6 @@ public class OpenApiConfig {
         Info information = new Info().title("Learn Vocabulary KDP System API").version("1.0").description("API documentation for website learn English vocabulary").contact(myContact);
 
         SecurityRequirement securityRequirement = new SecurityRequirement().addList("JWT");
-
         Components components = new Components().addSecuritySchemes("JWT", new SecurityScheme().name("JWT").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
 
         return new OpenAPI().info(information).servers(List.of(server)).addSecurityItem(securityRequirement).components(components);
