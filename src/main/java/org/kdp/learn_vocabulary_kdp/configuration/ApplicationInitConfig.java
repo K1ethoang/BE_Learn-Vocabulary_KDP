@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 17:22 PM (ICT)
+ * @LastModified: 2024/12/17 - 21:57 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.configuration;
@@ -48,7 +48,7 @@ public class ApplicationInitConfig {
             if (userRepository.findByEmail("kiethoang101@gmail.com").isEmpty()) {
                 Role role = roleRepository.findByName(ERole.ADMIN.getName());
 
-                User user = User.builder().email("kiethoang101@gmail.com").password(passwordEncoder.encode("12345678")).fullName("admin").role(role).build();
+                User user = User.builder().email("kiethoang101@gmail.com").password(passwordEncoder.encode("12345678")).fullName("admin").role(role).isBlocked(false).build();
 
                 userRepository.save(user);
                 log.warn("Init account: Admin user has been created with: " + "'kiethoang101@gmail.com/12345678', " + "please change password");

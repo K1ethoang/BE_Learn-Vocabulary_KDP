@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 20:34 PM (ICT)
+ * @LastModified: 2024/12/15 - 15:49 PM (ICT)
  ************************************************/
 
 package org.kdp.learn_vocabulary_kdp.service.impl;
@@ -27,8 +27,6 @@ import java.util.Date;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class JwtServiceImpl implements JwtService {
-    private static final String PREFIX_BEARER = "Bearer ";
-
     @NonFinal
     @Value("${security.jwt.secret-key}")
     String secretKey;
