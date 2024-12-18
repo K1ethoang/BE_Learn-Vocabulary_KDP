@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 18:50 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import lombok.AllArgsConstructor;
@@ -31,7 +30,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserResponse login(LoginRequest request) throws InvalidException {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException(UserMessage.EMAIL_PASSWORD_INCORRECT));
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new NotFoundException(UserMessage.EMAIL_PASSWORD_INCORRECT));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT);

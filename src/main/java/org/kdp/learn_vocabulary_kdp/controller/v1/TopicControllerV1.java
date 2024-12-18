@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 01:28 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
 import jakarta.validation.Valid;
@@ -30,19 +29,26 @@ public class TopicControllerV1 {
     TopicService topicService;
 
     @GetMapping("")
-    public ResponseEntity<Object> getTopics(@RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo, @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize, @RequestParam(defaultValue = DEFAULT_TOPIC_SORT_BY) String sortBy) {
+    public ResponseEntity<Object> getTopics(
+            @RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(defaultValue = DEFAULT_TOPIC_SORT_BY) String sortBy) {
         Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
 
-        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getTopicsByUserId(pageable));
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getTopicsByUserId(pageable));
     }
 
     @PostMapping("")
     public ResponseEntity<Object> createTopic(@Valid @RequestBody TopicCreationRequest topicCreationRequest) {
-        return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicCreationRequest));
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, topicService.createTopic(topicCreationRequest));
     }
 
     @PutMapping("/{topicId}")
-    public ResponseEntity<Object> updateTopic(@RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
-        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
+    public ResponseEntity<Object> updateTopic(
+            @RequestBody TopicUpdateRequest topicUpdateRequest, @PathVariable String topicId) {
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.updateTopic(topicUpdateRequest, topicId));
     }
 }

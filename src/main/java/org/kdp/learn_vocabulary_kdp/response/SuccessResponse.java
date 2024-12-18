@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 02:11 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;

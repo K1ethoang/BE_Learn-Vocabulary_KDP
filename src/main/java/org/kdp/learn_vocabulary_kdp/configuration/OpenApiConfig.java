@@ -3,8 +3,9 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 01:01 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.configuration;
+
+import java.util.List;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -18,13 +19,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 public class OpenApiConfig {
     @Value("${server.port}")
     private String serverPort;
-
 
     @Bean
     public OpenAPI defineOpenApi() {
@@ -37,16 +35,35 @@ public class OpenApiConfig {
         myContact.setEmail("kiethoang101.dev@gmail.com");
         myContact.setUrl("https://github.com/K1ethoang");
 
-        Info information = new Info().title("Learn Vocabulary KDP System API").version("1.0").description("API documentation for website learn English vocabulary").contact(myContact);
+        Info information = new Info()
+                .title("Learn Vocabulary KDP System API")
+                .version("1.0")
+                .description("API documentation for website learn English vocabulary")
+                .contact(myContact);
 
         SecurityRequirement securityRequirement = new SecurityRequirement().addList("JWT");
-        Components components = new Components().addSecuritySchemes("JWT", new SecurityScheme().name("JWT").type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"));
+        Components components = new Components()
+                .addSecuritySchemes(
+                        "JWT",
+                        new SecurityScheme()
+                                .name("JWT")
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer")
+                                .bearerFormat("JWT"));
 
-        return new OpenAPI().info(information).servers(List.of(server)).addSecurityItem(securityRequirement).components(components);
+        return new OpenAPI()
+                .info(information)
+                .servers(List.of(server))
+                .addSecurityItem(securityRequirement)
+                .components(components);
     }
 
     @Bean
     public GroupedOpenApi apiGroup() {
-        return GroupedOpenApi.builder().group("V1").packagesToScan("org.kdp.learn_vocabulary_kdp.controller.v1").pathsToMatch("/api/v1/**").build();
+        return GroupedOpenApi.builder()
+                .group("V1")
+                .packagesToScan("org.kdp.learn_vocabulary_kdp.controller.v1")
+                .pathsToMatch("/api/v1/**")
+                .build();
     }
 }

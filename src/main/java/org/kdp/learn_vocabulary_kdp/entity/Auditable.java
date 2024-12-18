@@ -3,9 +3,9 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 19:03 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.entity;
 
+import java.util.Date;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,8 +13,6 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass

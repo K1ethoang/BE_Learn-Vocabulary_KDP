@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 20:17 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.configuration;
 
 import org.kdp.learn_vocabulary_kdp.entity.User;
@@ -19,7 +18,10 @@ public class ModelMapperConfig {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT).setSkipNullEnabled(true);
+        modelMapper
+                .getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setSkipNullEnabled(true);
 
         modelMapper.addMappings(new PropertyMap<User, UserResponse>() {
             @Override
@@ -27,7 +29,7 @@ public class ModelMapperConfig {
                 map().setRole(source.getRole().getName());
             }
         });
-        
+
         return modelMapper;
     }
 }

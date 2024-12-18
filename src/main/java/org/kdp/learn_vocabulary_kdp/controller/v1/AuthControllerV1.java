@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 01:28 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
 import jakarta.validation.Valid;
@@ -34,12 +33,14 @@ public class AuthControllerV1 {
     @PostMapping("/log-in")
     public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) {
         UserResponse userResponse = authService.login(request);
-        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(userResponse));
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(userResponse));
     }
 
     @PostMapping("/register")
     public ResponseEntity<Object> register(@Valid @RequestBody UserCreationRequest userCreationRequest) {
-        return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, authService.register(userCreationRequest));
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, authService.register(userCreationRequest));
     }
 
     @PostMapping("/log-out")

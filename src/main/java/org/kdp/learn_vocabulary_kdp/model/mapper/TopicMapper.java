@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/17 - 22:26 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.model.mapper;
 
 import lombok.AccessLevel;

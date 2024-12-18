@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 00:11 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.model.dto.request.topic;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

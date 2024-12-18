@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 01:28 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
 import jakarta.validation.Valid;
@@ -32,12 +31,15 @@ public class UserControllerV1 {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("{userId}")
     public ResponseEntity<Object> getUserById(@PathVariable("userId") String userId) {
-        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUserById(userId));
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.getUserById(userId));
     }
 
     @PutMapping("{userId}")
-    public ResponseEntity<Object> updateUser(@Valid @RequestBody UserUpdateRequest userUpdateRequest, @PathVariable("userId") String userId) {
-        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.updateUser(userUpdateRequest, userId));
+    public ResponseEntity<Object> updateUser(
+            @Valid @RequestBody UserUpdateRequest userUpdateRequest, @PathVariable("userId") String userId) {
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, userService.updateUser(userUpdateRequest, userId));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

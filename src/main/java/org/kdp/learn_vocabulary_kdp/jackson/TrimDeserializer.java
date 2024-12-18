@@ -3,14 +3,13 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/13 - 23:44 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.jackson;
+
+import java.io.IOException;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-
-import java.io.IOException;
 
 public class TrimDeserializer extends JsonDeserializer<String> {
     @Override
