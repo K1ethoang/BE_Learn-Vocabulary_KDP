@@ -4,7 +4,6 @@ services:
     container_name: mysql-container-8.3.0
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: Vocabulary_KDP
     ports:
       - "6603:3306"
     volumes:
