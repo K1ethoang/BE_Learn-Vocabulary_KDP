@@ -9,7 +9,7 @@ services:
       - "6603:3306"
     volumes:
       - mysql_data:/var/lib/mysql # Lưu dữ liệu MySQL
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Chạy file SQL khi container khởi động lần đầuMySQL
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Chạy file SQL khi container khởi động lần đầu MySQL
     restart: always
 
   kdp-service:
@@ -23,7 +23,7 @@ services:
       - mysql # Đảm bảo MySQL khởi động trước
     restart: always
     env_file:
-      - .env.prod
+      - .env.dev
 
 volumes:
   mysql_data:
