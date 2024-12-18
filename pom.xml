@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2024. K1ethoang
   ~ @Author: Kiet Hoang Gia
-  ~ @LastModified: 2024/12/14 - 17:24 PM (ICT)
+  ~ @LastModified: 2024/12/18 - 16:28 PM (ICT)
   -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,7 +17,7 @@
     </parent>
     <groupId>org.kdp</groupId>
     <artifactId>Learn_Vocabulary_KDP</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>Learn_Vocabulary_KDP</name>
     <description>Learn_Vocabulary_KDP</description>
     <url/>
@@ -102,6 +102,34 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <configuration>
+                    <java>
+                        <removeUnusedImports />
+                        <toggleOffOn />
+                        <trimTrailingWhitespace />
+                        <endWithNewline />
+                        <indent>
+                            <tabs>true</tabs>
+                            <spacesPerTab>4</spacesPerTab>
+                        </indent>
+                        <palantirJavaFormat />
+                        <importOrder>
+                            <order>java, jakarta, org, com, com.diffplug</order>
+                        </importOrder>
+                    </java>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

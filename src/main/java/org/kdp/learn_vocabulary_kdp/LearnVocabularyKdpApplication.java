@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 19:19 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp;
 
 import org.springframework.boot.SpringApplication;
@@ -17,5 +16,4 @@ public class LearnVocabularyKdpApplication {
     public static void main(String[] args) {
         SpringApplication.run(LearnVocabularyKdpApplication.class, args);
     }
-
 }

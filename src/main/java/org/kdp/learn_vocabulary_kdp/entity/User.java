@@ -3,15 +3,14 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/16 - 18:33 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.entity;
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
 
 @Entity(name = "users")
 @Getter

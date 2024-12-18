@@ -1,10 +1,10 @@
 package org.kdp.learn_vocabulary_kdp.model.dto.paging;
 
+import java.util.List;
+
 import lombok.Data;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 @Data
 public class PageableDto {
@@ -31,4 +31,3 @@ public class PageableDto {
         setEmpty(page.isEmpty());
     }
 }
-

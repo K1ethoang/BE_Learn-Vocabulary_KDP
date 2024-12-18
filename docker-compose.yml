@@ -1,0 +1,28 @@
+services:
+  mysql:
+    image: mysql:8.3.0
+    container_name: mysql-container-8.3.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - "6603:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql # Lưu dữ liệu MySQL
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Chạy file SQL khi container khởi động lần đầu MySQL
+    restart: always
+
+  kdp-service:
+    build:
+      context: . # Thư mục hiện tại
+      dockerfile: Dockerfile
+    container_name: kdp-service-container-0.1.0
+    ports:
+      - "9091:9091"
+    depends_on:
+      - mysql # Đảm bảo MySQL khởi động trước
+    restart: always
+    env_file:
+      - .env.dev
+
+volumes:
+  mysql_data:

@@ -3,8 +3,9 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 02:07 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.configuration;
+
+import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -19,15 +20,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import java.io.IOException;
-
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void commence(
+            HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+            throws IOException, ServletException {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        ResponseEntity<ErrorResponse> apiResponse = ApiResponse.createErrorResponse(HttpStatus.UNAUTHORIZED, GlobalMessage.AUTHENTICATED);
+        ResponseEntity<ErrorResponse> apiResponse =
+                ApiResponse.createErrorResponse(HttpStatus.UNAUTHORIZED, GlobalMessage.AUTHENTICATED);
 
         ObjectMapper mapper = new ObjectMapper();
 

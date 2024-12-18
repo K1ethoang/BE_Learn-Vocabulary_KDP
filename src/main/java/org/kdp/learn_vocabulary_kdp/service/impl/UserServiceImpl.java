@@ -3,8 +3,10 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/15 - 15:22 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +26,6 @@ import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -51,7 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserById(String userId) throws NotFoundException {
-        return userMapper.toUserResponse(userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND)));
+        return userMapper.toUserResponse(
+                userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND)));
     }
 
     @Override
@@ -75,7 +75,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse updateUser(UserUpdateRequest userUpdateRequest, String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+        User user =
+                userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
 
         userMapper.updateUser(userUpdateRequest, user);
 
@@ -86,14 +87,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(String userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+        User user =
+                userRepository.findById(userId).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
 
         userRepository.delete(user);
     }
 
     @Override
     public UserResponse getMyInfo() throws NotFoundException {
-        User user = userRepository.findByEmail(contextHolderUtil.getNameFromContext()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+        User user = userRepository
+                .findByEmail(contextHolderUtil.getNameFromContext())
+                .orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
 
         return userMapper.toUserResponse(user);
     }

@@ -3,8 +3,9 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/15 - 16:01 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.model.dto.response.topic;
+
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
@@ -12,8 +13,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
-import java.util.Date;
 
 @AllArgsConstructor
 @Data

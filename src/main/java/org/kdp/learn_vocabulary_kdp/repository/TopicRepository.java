@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/18 - 00:41 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.repository;
 
 import org.kdp.learn_vocabulary_kdp.entity.Topic;

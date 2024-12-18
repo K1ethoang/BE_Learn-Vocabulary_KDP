@@ -3,8 +3,10 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/15 - 15:49 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.service.impl;
+
+import java.text.ParseException;
+import java.util.Date;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -19,9 +21,6 @@ import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
-import java.util.Date;
 
 @Slf4j
 @Service
@@ -40,7 +39,14 @@ public class JwtServiceImpl implements JwtService {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
 
         Date now = new Date();
-        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder().subject(userResponse.getEmail()).issuer("KDP").issueTime(now).expirationTime(Date.from(now.toInstant().plusMillis(jwtExpirationTime))).claim("user_id", userResponse.getId()).claim("scope", userResponse.getRole()).build();
+        JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
+                .subject(userResponse.getEmail())
+                .issuer("KDP")
+                .issueTime(now)
+                .expirationTime(Date.from(now.toInstant().plusMillis(jwtExpirationTime)))
+                .claim("user_id", userResponse.getId())
+                .claim("scope", userResponse.getRole())
+                .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
 
         JWSObject jwsObject = new JWSObject(jwsHeader, payload);

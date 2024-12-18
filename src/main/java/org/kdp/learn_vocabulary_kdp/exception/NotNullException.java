@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 11:45 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.exception;
 
 import lombok.AccessLevel;

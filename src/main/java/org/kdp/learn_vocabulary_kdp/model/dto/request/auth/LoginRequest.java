@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/14 - 11:52 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.model.dto.request.auth;
 
 import jakarta.validation.constraints.Email;

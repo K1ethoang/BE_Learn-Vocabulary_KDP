@@ -3,8 +3,11 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/17 - 22:42 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.service.impl;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -29,10 +32,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -59,7 +58,8 @@ public class TopicServiceImpl implements TopicService {
 
         List<Topic> topicList = topicPage.getContent();
 
-        List<TopicResponse> content = topicList.stream().map(topicMapper::toTopicResponse).toList();
+        List<TopicResponse> content =
+                topicList.stream().map(topicMapper::toTopicResponse).toList();
 
         PageableDto pageableDto = new PageableDto(topicPage);
 
@@ -72,7 +72,8 @@ public class TopicServiceImpl implements TopicService {
      * @hidden Auto get userId from Context Holder to checks
      */
     @Override
-    public TopicResponse createTopic(TopicCreationRequest topicCreationRequest) throws InvalidException, NotFoundException {
+    public TopicResponse createTopic(TopicCreationRequest topicCreationRequest)
+            throws InvalidException, NotFoundException {
         String userId = contextHolderUtil.getUserIdFromContext();
 
         if (topicRepository.existsTopicByTitleAndUser_Id(topicCreationRequest.getTitle(), userId)) {
@@ -92,8 +93,11 @@ public class TopicServiceImpl implements TopicService {
      * @hidden Auto get userId from Context Holder to checks
      */
     @Override
-    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId) throws NotFoundException {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
+    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId)
+            throws NotFoundException {
+        Topic topic = topicRepository
+                .findById(topicId)
+                .orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
 
         String userId = contextHolderUtil.getUserIdFromContext();
         // Check topic belong to this user
@@ -113,7 +117,6 @@ public class TopicServiceImpl implements TopicService {
     @Override
     public PageableDto getWordsByTopic(Pageable pageable, String topicId) {
         String userId = contextHolderUtil.getUserIdFromContext();
-
 
         return null;
     }

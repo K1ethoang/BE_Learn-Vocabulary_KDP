@@ -3,8 +3,10 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/08 - 01:31 AM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.service.impl;
+
+import java.util.Arrays;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import org.kdp.learn_vocabulary_kdp.entity.Word;
@@ -18,9 +20,6 @@ import org.kdp.learn_vocabulary_kdp.service.interfaces.WordService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -63,6 +62,5 @@ public class WordServiceImpl implements WordService {
     }
 
     @Override
-    public void deleteWord(String id) {
-    }
+    public void deleteWord(String id) {}
 }

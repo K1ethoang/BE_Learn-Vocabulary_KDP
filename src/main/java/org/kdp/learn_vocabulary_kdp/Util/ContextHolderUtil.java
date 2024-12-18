@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/15 - 15:51 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.Util;
 
 import lombok.NoArgsConstructor;
@@ -38,6 +37,4 @@ public class ContextHolderUtil {
         }
         return null;
     }
-
-
 }
