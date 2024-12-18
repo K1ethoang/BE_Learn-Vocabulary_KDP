@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2024. K1ethoang
   ~ @Author: Kiet Hoang Gia
-  ~ @LastModified: 2024/12/18 - 15:58 PM (ICT)
+  ~ @LastModified: 2024/12/18 - 16:28 PM (ICT)
   -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -17,7 +17,7 @@
     </parent>
     <groupId>org.kdp</groupId>
     <artifactId>Learn_Vocabulary_KDP</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.1.0</version>
     <name>Learn_Vocabulary_KDP</name>
     <description>Learn_Vocabulary_KDP</description>
     <url/>
