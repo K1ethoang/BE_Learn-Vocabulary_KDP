@@ -1,17 +1,24 @@
+/*************************************************
+ * Copyright (c) 2024. K1ethoang
+ * @Author: Kiet Hoang Gia
+ * @LastModified: 2024/12/19 - 15:18 PM (ICT)
+ ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.interfaces;
 
-import org.kdp.learn_vocabulary_kdp.model.dto.paging.PageableDto;
-import org.kdp.learn_vocabulary_kdp.model.dto.word.WordDto;
-import org.springframework.data.domain.Pageable;
+import jakarta.validation.Valid;
+import org.kdp.learn_vocabulary_kdp.entity.Topic;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordCreationRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordUpdateRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public interface WordService {
-    PageableDto getAllWords(Pageable pageable);
+    WordResponse createWord(WordCreationRequest request, Topic topic);
 
-    WordDto createWord(WordDto wordDto);
-
-    WordDto updateWord(String id, WordDto wordDto);
+    WordResponse updateWord(String id, @Valid WordUpdateRequest request);
 
     void deleteWord(String id);
 
-    WordDto getWordByUserId(String user);
+    WordResponse getWordByUserId(String user);
 }
