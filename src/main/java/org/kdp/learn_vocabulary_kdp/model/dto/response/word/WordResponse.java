@@ -5,6 +5,9 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.dto.response.word;
 
+import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,9 +15,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.type.TypeResponse;
-
-import java.util.Date;
-import java.util.List;
 
 @AllArgsConstructor
 @Data
@@ -26,6 +26,7 @@ public class WordResponse {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     Date updatedAt;
+
     String id;
     String name;
     String pronounce;

@@ -5,6 +5,8 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.dto.request.word;
 
+import java.util.List;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AccessLevel;
@@ -14,8 +16,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.kdp.learn_vocabulary_kdp.jackson.TrimDeserializer;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor

@@ -5,12 +5,12 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
 
 @Entity
 @Table(name = "words")
@@ -45,6 +45,9 @@ public class Word extends Auditable {
     Topic topic;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "words_types", joinColumns = @JoinColumn(name = "word_id"), inverseJoinColumns = @JoinColumn(name = "type_id"))
+    @JoinTable(
+            name = "words_types",
+            joinColumns = @JoinColumn(name = "word_id"),
+            inverseJoinColumns = @JoinColumn(name = "type_id"))
     List<Type> types;
 }

@@ -5,6 +5,9 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,9 +40,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -53,7 +53,9 @@ public class TopicServiceImpl implements TopicService {
     TypeRepository typeRepository;
 
     public Topic getTopic(String topicId) {
-        Topic topic = topicRepository.findById(topicId).orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
+        Topic topic = topicRepository
+                .findById(topicId)
+                .orElseThrow(() -> new NotFoundException(TopicMessage.TOPIC_NOT_FOUND));
 
         String userId = contextHolderUtil.getUserIdFromContext();
         // Check topic belong to this user
@@ -79,7 +81,8 @@ public class TopicServiceImpl implements TopicService {
 
         List<Topic> topicList = topicPage.getContent();
 
-        List<TopicResponse> content = topicList.stream().map(topicMapper::toTopicResponse).toList();
+        List<TopicResponse> content =
+                topicList.stream().map(topicMapper::toTopicResponse).toList();
 
         PageableDto pageableDto = new PageableDto(topicPage);
 
@@ -92,7 +95,8 @@ public class TopicServiceImpl implements TopicService {
      * @hidden Auto get userId from Context Holder to checks
      */
     @Override
-    public TopicResponse createTopic(TopicCreationRequest topicCreationRequest) throws InvalidException, NotFoundException {
+    public TopicResponse createTopic(TopicCreationRequest topicCreationRequest)
+            throws InvalidException, NotFoundException {
         String userId = contextHolderUtil.getUserIdFromContext();
 
         // Kiểm tra đã có topic trùng với title và thuộc về user này chưa
@@ -108,11 +112,13 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId) throws NotFoundException, InvalidException {
+    public TopicResponse updateTopic(@Valid TopicUpdateRequest topicUpdateRequest, String topicId)
+            throws NotFoundException, InvalidException {
         Topic topic = getTopic(topicId);
 
         // Kiểm tra đã có topic trùng với title và thuộc về user này chưa
-        if (topicRepository.existsTopicByTitleAndUser_IdAndIdNot(topicUpdateRequest.getTitle(), topic.getUser().getId(), topicId)) {
+        if (topicRepository.existsTopicByTitleAndUser_IdAndIdNot(
+                topicUpdateRequest.getTitle(), topic.getUser().getId(), topicId)) {
             throw new InvalidException(TopicMessage.TOPIC_EXIST);
         }
 
@@ -123,7 +129,8 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public WordResponse addWord(String topicId, WordCreationRequest request) throws InvalidException, NotFoundException {
+    public WordResponse addWord(String topicId, WordCreationRequest request)
+            throws InvalidException, NotFoundException {
         Topic topic = getTopic(topicId);
 
         // Kiểm tra đã có word với Name này chưa
@@ -134,7 +141,6 @@ public class TopicServiceImpl implements TopicService {
         Word word = wordMapper.toWord(request);
         word.setTopic(topic);
         word.setHasRemembered(false);
-
 
         // Tìm ds type theo Id
         List<Type> types = typeRepository.findAllById(request.getTypeIds());
@@ -150,7 +156,10 @@ public class TopicServiceImpl implements TopicService {
     public WordResponse updateWord(String topicId, String wordId, @Valid WordUpdateRequest request) {
         Topic topic = getTopic(topicId);
 
-        Word word = topic.getWords().stream().filter(w -> w.getId().equals(wordId)).findFirst().orElseThrow(() -> new NotFoundException(WordMessage.WORD_NOT_FOUND));
+        Word word = topic.getWords().stream()
+                .filter(w -> w.getId().equals(wordId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(WordMessage.WORD_NOT_FOUND));
 
         // Kiểm tra đã có word với Name này chưa
         if (wordRepository.existsWordByNameAndTopic_IdAndIdNot(request.getName(), topicId, wordId)) {
@@ -177,7 +186,10 @@ public class TopicServiceImpl implements TopicService {
     public void deleteWord(String topicId, String wordId) throws NotFoundException {
         Topic topic = getTopic(topicId);
 
-        Word word = topic.getWords().stream().filter(w -> w.getId().equals(wordId)).findFirst().orElseThrow(() -> new NotFoundException(WordMessage.WORD_NOT_FOUND));
+        Word word = topic.getWords().stream()
+                .filter(w -> w.getId().equals(wordId))
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException(WordMessage.WORD_NOT_FOUND));
 
         wordRepository.delete(word);
     }
