@@ -1,11 +1,9 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 19:02 PM (ICT)
+ * @LastModified: 2024/12/20 - 19:35 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
-
-import java.util.Date;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,15 +13,17 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-@Entity(name = "quizzes")
+import java.util.Date;
+
+@Entity(name = "exams")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Quizz {
+public class Exam {
     @Id
     @UuidGenerator
-    @Column(name = "quizz_id")
+    @Column(name = "exam_id")
     private String id;
 
     @Column(name = "total_questions")
@@ -36,10 +36,6 @@ public class Quizz {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "completed_at", nullable = false, updatable = false)
     private Date completedAt;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "topic_id")

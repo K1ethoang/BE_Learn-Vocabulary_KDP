@@ -1,16 +1,16 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/16 - 18:33 PM (ICT)
+ * @LastModified: 2024/12/20 - 19:35 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
-
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.util.List;
 
 @Entity(name = "users")
 @Getter
@@ -46,7 +46,4 @@ public class User extends Auditable {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Topic> topics;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Quizz> quizzes;
 }
