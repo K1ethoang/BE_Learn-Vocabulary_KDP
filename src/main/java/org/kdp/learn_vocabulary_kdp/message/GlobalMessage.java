@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 11:28 AM (ICT)
+ * @LastModified: 2024/12/20 - 21:33 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.message;
 
@@ -13,4 +13,5 @@ public class GlobalMessage {
     public static final String REQUIRED = "Required";
     public static final String SUCCESSFULLY = "Successfully";
     public static final String AUTHENTICATED = "Unauthenticated";
+    public static final String MUST_POSITIVE_NUMBER = "Must be positive number";
 }

@@ -1,9 +1,11 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 19:35 PM (ICT)
+ * @LastModified: 2024/12/20 - 21:23 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
+
+import java.util.Date;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,8 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.Date;
 
 @Entity(name = "exams")
 @Getter

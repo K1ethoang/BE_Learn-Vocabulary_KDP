@@ -5,11 +5,11 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.List;
 
 @Entity(name = "topics")
 @Getter
