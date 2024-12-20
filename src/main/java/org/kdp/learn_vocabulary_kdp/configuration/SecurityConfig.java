@@ -5,6 +5,8 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.configuration;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +27,13 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.crypto.spec.SecretKeySpec;
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-    private final String[] PUBLIC_ENDPOINTS = {"/api/v1/auth/**", "/v3/api" + "-docs/**", "/swagger-ui/**", "/api/v1/types/**"};
+    private final String[] PUBLIC_ENDPOINTS = {
+        "/api/v1/auth/**", "/v3/api" + "-docs/**", "/swagger-ui/**", "/api/v1/types/**"
+    };
 
     @Value("${security.jwt.secret-key}")
     private String secretKey;
@@ -39,10 +41,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable);
-        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest().authenticated());
+        http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                .requestMatchers(PUBLIC_ENDPOINTS)
+                .permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated());
 
-        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()).jwtAuthenticationConverter(jwtConverter())).authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
+        http.oauth2ResourceServer(oauth2 -> oauth2.jwt(
+                        jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder()).jwtAuthenticationConverter(jwtConverter()))
+                .authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
 
         return http.build();
     }
@@ -76,7 +85,9 @@ public class SecurityConfig {
     JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(), "HS512");
 
-        return NimbusJwtDecoder.withSecretKey(secretKeySpec).macAlgorithm(MacAlgorithm.HS512).build();
+        return NimbusJwtDecoder.withSecretKey(secretKeySpec)
+                .macAlgorithm(MacAlgorithm.HS512)
+                .build();
     }
 
     @Bean
