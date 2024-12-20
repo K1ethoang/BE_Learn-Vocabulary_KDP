@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 20:44 PM (ICT)
+ * @LastModified: 2024/12/20 - 23:03 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.message;
 
@@ -10,12 +10,6 @@ public class UserMessage {
     public static final int FULLNAME_MAX_LENGTH = 40;
     public static final int PASSWORD_MIN_LENGTH = 8;
     public static final int PASSWORD_MAX_LENGTH = 20;
-
-    //    Required
-    public static final String EMAIL_REQUIRED = "Email is required";
-    public static final String USER_ID_REQUIRED = "User_id is required";
-    public static final String PASSWORD_REQUIRED = "Password is required";
-    public static final String FULLNAME_REQUIRED = "Full_name is required";
 
     //    Format
     public static final String FULLNAME_FORMAT =
@@ -29,4 +23,5 @@ public class UserMessage {
     public static final String EMAIL_PASSWORD_INCORRECT = "Email or password is incorrect";
     public static final String EMAIL_EXIST = "Email is already exist";
     public static final String USER_NOT_FOUND = "User not found";
+    public static final String USER_BLOCKED = "User is blocked";
 }

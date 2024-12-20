@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 18:50 PM (ICT)
+ * @LastModified: 2024/12/20 - 23:04 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -36,6 +36,10 @@ public class AuthServiceImpl implements AuthService {
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidException(UserMessage.EMAIL_PASSWORD_INCORRECT);
+        }
+
+        if (Boolean.TRUE.equals(user.getIsBlocked())) {
+            throw new InvalidException(UserMessage.USER_BLOCKED);
         }
 
         return userMapper.toUserResponse(user);

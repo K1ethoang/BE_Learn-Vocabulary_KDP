@@ -1,10 +1,11 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/18 - 01:28 AM (ICT)
+ * @LastModified: 2024/12/20 - 23:05 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,7 @@ public class AuthControllerV1 {
                 HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, authService.register(userCreationRequest));
     }
 
+    @Operation(summary = "Chưa có gì")
     @PostMapping("/log-out")
     public ResponseEntity<Object> logout() {
         return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, null);
