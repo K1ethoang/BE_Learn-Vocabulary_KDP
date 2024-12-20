@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 00:42 AM (ICT)
+ * @LastModified: 2024/12/20 - 21:19 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
@@ -87,5 +87,17 @@ public class TopicControllerV1 {
     public ResponseEntity<Object> deleteWord(@PathVariable String topicId, @PathVariable String wordId) {
         topicService.deleteWord(topicId, wordId);
         return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
+    }
+
+    @GetMapping("/{topicId}/exams")
+    public ResponseEntity<Object> getExams(
+            @RequestParam(defaultValue = DEFAULT_PAGE_NO) int pageNo,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(defaultValue = "completedAt") String sortBy,
+            @PathVariable String topicId) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(Sort.Direction.DESC, sortBy));
+
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getExams(pageable, topicId));
     }
 }

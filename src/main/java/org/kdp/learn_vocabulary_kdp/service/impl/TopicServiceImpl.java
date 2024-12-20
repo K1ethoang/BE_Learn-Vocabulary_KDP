@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 00:47 AM (ICT)
+ * @LastModified: 2024/12/20 - 21:26 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -14,10 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.Util.ContextHolderUtil;
-import org.kdp.learn_vocabulary_kdp.entity.Topic;
-import org.kdp.learn_vocabulary_kdp.entity.Type;
-import org.kdp.learn_vocabulary_kdp.entity.User;
-import org.kdp.learn_vocabulary_kdp.entity.Word;
+import org.kdp.learn_vocabulary_kdp.entity.*;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
 import org.kdp.learn_vocabulary_kdp.message.TopicMessage;
@@ -27,10 +24,13 @@ import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordCreationRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordUpdateRequest;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.exam.ExamResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
+import org.kdp.learn_vocabulary_kdp.model.mapper.ExamMapper;
 import org.kdp.learn_vocabulary_kdp.model.mapper.TopicMapper;
 import org.kdp.learn_vocabulary_kdp.model.mapper.WordMapper;
+import org.kdp.learn_vocabulary_kdp.repository.ExamRepository;
 import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
 import org.kdp.learn_vocabulary_kdp.repository.TypeRepository;
 import org.kdp.learn_vocabulary_kdp.repository.WordRepository;
@@ -51,6 +51,8 @@ public class TopicServiceImpl implements TopicService {
     TopicMapper topicMapper;
     WordMapper wordMapper;
     TypeRepository typeRepository;
+    ExamRepository examRepository;
+    ExamMapper examMapper;
 
     public Topic getTopic(String topicId) {
         Topic topic = topicRepository
@@ -86,6 +88,22 @@ public class TopicServiceImpl implements TopicService {
 
         PageableDto pageableDto = new PageableDto(topicPage);
 
+        pageableDto.setContent(Arrays.asList(content.toArray()));
+
+        return pageableDto;
+    }
+
+    @Override
+    public PageableDto getExams(Pageable pageable, String topicId) {
+        // Kiểm tra xem topic này có thuộc về user không
+        Topic topic = getTopic(topicId);
+
+        Page<Exam> examPage = examRepository.findAllByTopic_Id(topicId, pageable);
+
+        List<ExamResponse> content =
+                examPage.getContent().stream().map(examMapper::toExamResponse).toList();
+
+        PageableDto pageableDto = new PageableDto(examPage);
         pageableDto.setContent(Arrays.asList(content.toArray()));
 
         return pageableDto;
@@ -210,6 +228,7 @@ public class TopicServiceImpl implements TopicService {
     public void deleteTopic(String topicId) {
         Topic topic = getTopic(topicId);
 
+        examRepository.deleteAll(topic.getExams());
         wordRepository.deleteAll(topic.getWords());
 
         topicRepository.delete(topic);
