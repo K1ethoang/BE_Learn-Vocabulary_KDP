@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/15 - 15:51 PM (ICT)
+ * @LastModified: 2024/12/20 - 23:20 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.Util;
 
@@ -34,6 +34,14 @@ public class ContextHolderUtil {
         var authentication = getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof Jwt jwt) {
             return jwt.getClaimAsString("user_id");
+        }
+        return null;
+    }
+
+    public String getRoleFromContext() {
+        var authentication = getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof Jwt jwt) {
+            return jwt.getClaimAsString("scope");
         }
         return null;
     }

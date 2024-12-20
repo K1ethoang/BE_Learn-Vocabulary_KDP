@@ -1,29 +1,31 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/14 - 21:13 PM (ICT)
+ * @LastModified: 2024/12/20 - 23:28 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.interfaces;
 
-import java.util.List;
-
+import jakarta.validation.Valid;
+import org.kdp.learn_vocabulary_kdp.model.dto.paging.PageableDto;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.user.UserCreationRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.user.UserUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserResponse;
-import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.data.domain.Pageable;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public interface UserService {
-    List<UserResponse> getUsers();
+    PageableDto getUsers(Pageable pageable);
 
     UserResponse getUserById(String userId);
 
     UserResponse createUser(UserCreationRequest userCreationRequest);
 
-    @PostAuthorize("returnObject.email == authentication.name")
-    UserResponse updateUser(UserUpdateRequest userUpdateRequest, String userId);
+    UserResponse updateUser(@Valid UserUpdateRequest userUpdateRequest, String userId);
 
     void deleteUser(String userId);
 
-    @PostAuthorize("returnObject.email == authentication.name")
+    UserResponse toggleBlockUser(String userId, boolean isBlocked);
+
     UserResponse getMyInfo();
 }
