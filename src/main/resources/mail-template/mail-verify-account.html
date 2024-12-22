@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright (c) 2024. K1ethoang
+  ~ @Author: Kiet Hoang Gia
+  ~ @LastModified: 2024/12/22 - 16:16 PM (ICT)
+  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Welcome Email</title>
+    <link href="../static/style.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .email-content p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        .email-content a.button{
+            display: inline-block;
+            margin: 20px 0;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            target: _blank;
+        }
+        .email-content a:hover {
+            background-color: #0056b3;
+        }
+        .email-footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+        .email-footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-content">
+        <h2>Chào mừng, <span th:text="${email}">[Emal]</span>!</h2>
+        <p>Cảm ơn bạn đã đăng ký KDP.</p>
+        <p>Xác minh địa chỉ email của bạn bằng cách nhấp vào nút bên dưới.</p>
+        <p>Link xác minh có hiệu lực trong 10p.</p>
+        <a class="button" th:href="${ConfirmationUrl}">Xác minh tài khoản</a>
+        <p>Nếu không phải bạn yêu cầu, hãy bỏ qua email này.</p>
+    </div>
+    <hr>
+    <div class="email-footer">
+        <p>Trân trọng,</p>
+        <p><b>KDP Team</b></p>
+        <p><a href="mailto:kiethoang101.dev@gmail.com">kiethoang101.dev@gmail.com</a></p>
+    </div>
+</div>
+</body>
+</html>

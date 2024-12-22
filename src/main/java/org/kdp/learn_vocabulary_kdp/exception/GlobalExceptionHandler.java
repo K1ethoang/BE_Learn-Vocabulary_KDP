@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/18 - 02:04 AM (ICT)
+ * @LastModified: 2024/12/22 - 09:56 AM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.exception;
 
@@ -9,6 +9,7 @@ import java.util.List;
 
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
@@ -96,5 +97,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpClientErrorException.Unauthorized.class)
     public ResponseEntity<ErrorResponse> handlerUnauthorizedException(HttpClientErrorException.Unauthorized e) {
         return ApiResponse.createErrorResponse(HttpStatus.UNAUTHORIZED, e.getMessage());
+    }
+
+    @ExceptionHandler(MessagingException.class)
+    public ResponseEntity<ErrorResponse> handlerMessagingException(MessagingException e) {
+        return ApiResponse.createErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 21:44 PM (ICT)
+ * @LastModified: 2024/12/22 - 15:32 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.dto.response.user;
 
@@ -33,7 +33,9 @@ public class UserResponse {
 
     String avatar;
 
-    Boolean isBlocked;
+    Boolean isBlock;
+
+    Boolean isActive;
 
     String role;
 }

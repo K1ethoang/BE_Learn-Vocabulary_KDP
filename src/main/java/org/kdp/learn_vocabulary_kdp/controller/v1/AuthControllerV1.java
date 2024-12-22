@@ -1,11 +1,11 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 23:05 PM (ICT)
+ * @LastModified: 2024/12/22 - 16:58 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
-import io.swagger.v3.oas.annotations.Operation;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +18,7 @@ import org.kdp.learn_vocabulary_kdp.service.interfaces.AuthService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.JwtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("api/v1/auth")
 @RestController
@@ -32,21 +29,28 @@ public class AuthControllerV1 {
     JwtService jwtService;
 
     @PostMapping("/log-in")
-    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<Object> login(@Valid @RequestBody LoginRequest request) throws MessagingException {
         UserResponse userResponse = authService.login(request);
         return ApiResponse.createSuccessResponse(
                 HttpStatus.OK, GlobalMessage.SUCCESSFULLY, jwtService.generateToken(userResponse));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@Valid @RequestBody UserCreationRequest userCreationRequest) {
+    public ResponseEntity<Object> register(@Valid @RequestBody UserCreationRequest userCreationRequest)
+            throws MessagingException {
         return ApiResponse.createSuccessResponse(
                 HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, authService.register(userCreationRequest));
     }
 
-    @Operation(summary = "Chưa có gì")
-    @PostMapping("/log-out")
-    public ResponseEntity<Object> logout() {
-        return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, null);
+    @PostMapping("/verify-account")
+    public ResponseEntity<Object> verifyToken(@RequestParam String token, @RequestParam String email) {
+        authService.verifyToken(token, email);
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
+    }
+
+    @PostMapping("/resend-verify-token")
+    public ResponseEntity<Object> resendVerifyToken(@RequestParam String email) throws MessagingException {
+        authService.resendVerifyToken(email);
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
     }
 }
