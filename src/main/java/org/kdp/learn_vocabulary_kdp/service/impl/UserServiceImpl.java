@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 23:32 PM (ICT)
+ * @LastModified: 2024/12/22 - 17:08 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.toUser(userCreationRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEmail(userCreationRequest.getEmail().toLowerCase());
-        user.setIsBlocked(false);
 
         Role role = roleRepository.findByName(ERole.USER.getName());
         role.setName(ERole.USER.getName());
@@ -134,7 +133,7 @@ public class UserServiceImpl implements UserService {
     public UserResponse toggleBlockUser(String userId, boolean isBlocked) {
         User user = getUser(userId);
 
-        user.setIsBlocked(isBlocked);
+        user.setIsBlock(isBlocked);
         userRepository.save(user);
         return userMapper.toUserResponse(user);
     }

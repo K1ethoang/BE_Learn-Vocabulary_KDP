@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/17 - 21:57 PM (ICT)
+ * @LastModified: 2024/12/22 - 13:37 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.configuration;
 
@@ -52,7 +52,6 @@ public class ApplicationInitConfig {
                         .password(passwordEncoder.encode("12345678"))
                         .fullName("admin")
                         .role(role)
-                        .isBlocked(false)
                         .build();
 
                 userRepository.save(user);
