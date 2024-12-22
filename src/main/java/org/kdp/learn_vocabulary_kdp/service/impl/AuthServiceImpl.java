@@ -5,6 +5,10 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import java.text.MessageFormat;
+import java.util.Date;
+import java.util.UUID;
+
 import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -30,10 +34,6 @@ import org.kdp.learn_vocabulary_kdp.service.interfaces.MailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.text.MessageFormat;
-import java.util.Date;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -142,10 +142,12 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void resetPassword(ResetPasswordRequest request, String token) {
-        User user =
-                userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
+        User user = userRepository
+                .findByEmail(request.getEmail())
+                .orElseThrow(() -> new NotFoundException(UserMessage.USER_NOT_FOUND));
 
-        Token tokenFromDb = tokenRepository.findById(token).orElseThrow(() -> new NotFoundException(UserMessage.TOKEN_INVALID));
+        Token tokenFromDb =
+                tokenRepository.findById(token).orElseThrow(() -> new NotFoundException(UserMessage.TOKEN_INVALID));
 
         // Kiểm tra token có thuộc về user này không
         if (tokenFromDb != user.getToken()) {
@@ -170,10 +172,7 @@ public class AuthServiceImpl implements AuthService {
         String token = saveToken(user, EXPIRY_TIME_RESET_PASSWORD_TOKEN);
         // Gửi mail
         String resetPasswordUrl = MessageFormat.format(
-                "{0}/reset-password" + "?token={1}" + "&email={2}",
-                frontendDomain,
-                token,
-                user.getEmail());
+                "{0}/reset-password" + "?token={1}" + "&email={2}", frontendDomain, token, user.getEmail());
         mailService.sendMailResetPassword(user, resetPasswordUrl);
     }
 

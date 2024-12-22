@@ -3,7 +3,6 @@
  * @Author: Kiet Hoang Gia
  * @LastModified: 2024/12/22 - 23:47 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.model.dto.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
@@ -21,6 +20,7 @@ import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
 public class ResetPasswordRequest {
     @NotBlank(message = GlobalMessage.REQUIRED)
     String email;
+
     @NotBlank(message = GlobalMessage.REQUIRED)
     String newPassword;
 }

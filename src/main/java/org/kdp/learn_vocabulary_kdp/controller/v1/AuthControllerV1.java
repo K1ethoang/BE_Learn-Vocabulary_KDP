@@ -40,15 +40,13 @@ public class AuthControllerV1 {
     public ResponseEntity<Object> register(@Valid @RequestBody UserCreationRequest userCreationRequest)
             throws MessagingException {
         authService.register(userCreationRequest);
-        return ApiResponse.createSuccessResponse(
-                HttpStatus.CREATED, GlobalMessage.EMAIL_SENT, null);
+        return ApiResponse.createSuccessResponse(HttpStatus.CREATED, GlobalMessage.EMAIL_SENT, null);
     }
 
     @PostMapping("/verify-account")
     public ResponseEntity<Object> verifyToken(@RequestParam String token, @RequestParam String email) {
         authService.verifyToken(token, email);
-        return ApiResponse.createSuccessResponse(HttpStatus.OK,
-                GlobalMessage.SUCCESSFULLY, null);
+        return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
     }
 
     @PostMapping("/resend-verify-token")
@@ -64,7 +62,8 @@ public class AuthControllerV1 {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<Object> resetPassword(@Valid @RequestBody ResetPasswordRequest request, @RequestParam String token) {
+    public ResponseEntity<Object> resetPassword(
+            @Valid @RequestBody ResetPasswordRequest request, @RequestParam String token) {
         authService.resetPassword(request, token);
         return ApiResponse.createSuccessResponse(HttpStatus.OK, GlobalMessage.SUCCESSFULLY, null);
     }

@@ -21,5 +21,6 @@ public interface AuthService {
     void resendVerifyToken(String email) throws MessagingException;
 
     void forgotPassword(String email) throws MessagingException;
+
     void resetPassword(ResetPasswordRequest request, String token);
 }

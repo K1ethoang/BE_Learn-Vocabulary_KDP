@@ -5,6 +5,9 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.AccessLevel;
@@ -17,9 +20,6 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 @AllArgsConstructor
