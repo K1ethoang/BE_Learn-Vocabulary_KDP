@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/22 - 17:06 PM (ICT)
+ * @LastModified: 2024/12/23 - 00:14 AM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.message;
 
@@ -33,4 +33,5 @@ public class UserMessage {
     public static final String TOKEN_EXPIRED = "Token has expired";
     public static final String VERIFY_EMAIL = "You must verify your email " + "address";
     public static final String ACCOUNT_ACTIVATED = "Account is activated";
+    public static final String EMAIL_INVALID = "Email is invalid";
 }
