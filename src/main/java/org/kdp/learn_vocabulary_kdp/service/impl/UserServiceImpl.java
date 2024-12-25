@@ -1,13 +1,14 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/22 - 17:08 PM (ICT)
+ * @LastModified: 2024/12/25 - 16:40 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ import org.kdp.learn_vocabulary_kdp.model.dto.response.user.UserResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.UserMapper;
 import org.kdp.learn_vocabulary_kdp.repository.RoleRepository;
 import org.kdp.learn_vocabulary_kdp.repository.UserRepository;
+import org.kdp.learn_vocabulary_kdp.service.interfaces.MailService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     ContextHolderUtil contextHolderUtil;
+    MailService mailService;
 
     private User getUser(String userId) throws NotFoundException, AccessDeniedException {
         String userIdFromContext = contextHolderUtil.getUserIdFromContext();
@@ -98,27 +101,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(@Valid UserUpdateRequest userUpdateRequest, String userId) throws InvalidException {
+    public UserResponse updateUser(@Valid UserUpdateRequest userUpdateRequest, String userId)
+            throws InvalidException, MessagingException {
         User user = getUser(userId);
-        String oldEmail = user.getEmail();
 
         userMapper.updateUser(userUpdateRequest, user);
 
         user.setEmail(user.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // kiểm tra email được update đã tồn tại chưa
-        if (userRepository.existsUserByEmail(userUpdateRequest.getEmail())) {
-            throw new InvalidException(UserMessage.EMAIL_EXIST);
-        }
+        userRepository.save(user);
 
-        User userUpdated = userRepository.save(user);
-
-        // Gửi mail nếu email được cập nhật mới
-        // todo: mail service
-        if (!userUpdated.getEmail().equalsIgnoreCase(oldEmail)) {
-            log.info("Tài khoản của bạn đã được cập nhật email mới: " + user.getEmail());
-        }
         return userMapper.toUserResponse(user);
     }
 
