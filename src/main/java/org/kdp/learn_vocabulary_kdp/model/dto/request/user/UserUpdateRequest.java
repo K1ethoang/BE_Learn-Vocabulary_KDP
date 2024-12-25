@@ -1,12 +1,11 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 22:42 PM (ICT)
+ * @LastModified: 2024/12/25 - 16:39 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.dto.request.user;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,10 +26,6 @@ public class UserUpdateRequest {
             message = UserMessage.FULLNAME_FORMAT)
     @JsonDeserialize(using = TrimDeserializer.class)
     String fullName;
-
-    @Email(message = UserMessage.EMAIL_FORMAT)
-    @JsonDeserialize(using = TrimDeserializer.class)
-    String email;
 
     @Size(
             min = UserMessage.PASSWORD_MIN_LENGTH,
