@@ -2,7 +2,7 @@
 <!--
   ~ Copyright (c) 2024. K1ethoang
   ~ @Author: Kiet Hoang Gia
-  ~ @LastModified: 2024/12/22 - 09:51 AM (ICT)
+  ~ @LastModified: 2024/12/25 - 12:55 PM (ICT)
   -->
 
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -102,6 +102,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.3.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

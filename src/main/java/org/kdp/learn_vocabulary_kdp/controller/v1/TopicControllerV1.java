@@ -1,10 +1,13 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 21:19 PM (ICT)
+ * @LastModified: 2024/12/25 - 15:21 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
+import java.io.IOException;
+
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -99,5 +102,10 @@ public class TopicControllerV1 {
 
         return ApiResponse.createSuccessResponse(
                 HttpStatus.OK, GlobalMessage.SUCCESSFULLY, topicService.getExams(pageable, topicId));
+    }
+
+    @GetMapping(value = "/excel/{topicId}")
+    public void downloadExcel(HttpServletResponse response, @PathVariable String topicId) throws IOException {
+        topicService.exportExcel(response, topicId);
     }
 }
