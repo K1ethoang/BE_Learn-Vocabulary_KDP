@@ -1,13 +1,15 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 21:26 PM (ICT)
+ * @LastModified: 2024/12/25 - 13:36 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,9 @@ import org.kdp.learn_vocabulary_kdp.repository.ExamRepository;
 import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
 import org.kdp.learn_vocabulary_kdp.repository.TypeRepository;
 import org.kdp.learn_vocabulary_kdp.repository.WordRepository;
+import org.kdp.learn_vocabulary_kdp.service.interfaces.ExcelService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -53,6 +57,8 @@ public class TopicServiceImpl implements TopicService {
     TypeRepository typeRepository;
     ExamRepository examRepository;
     ExamMapper examMapper;
+    ExcelService excelService;
+    private final ResourcePatternResolver resourcePatternResolver;
 
     public Topic getTopic(String topicId) {
         Topic topic = topicRepository
@@ -232,5 +238,14 @@ public class TopicServiceImpl implements TopicService {
         wordRepository.deleteAll(topic.getWords());
 
         topicRepository.delete(topic);
+    }
+
+    @Override
+    public void exportExcel(HttpServletResponse response, String topicId) throws IOException {
+        Topic topic = getTopic(topicId);
+        List<WordResponse> data =
+                topic.getWords().stream().map(wordMapper::toWordResponse).toList();
+
+        excelService.exportTopicWord(response, data, topic.getTitle());
     }
 }
