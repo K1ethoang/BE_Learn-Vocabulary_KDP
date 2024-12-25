@@ -1,14 +1,13 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/25 - 16:40 PM (ICT)
+ * @LastModified: 2024/12/25 - 17:13 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
 import java.util.Arrays;
 import java.util.List;
 
-import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -101,8 +100,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse updateUser(@Valid UserUpdateRequest userUpdateRequest, String userId)
-            throws InvalidException, MessagingException {
+    public UserResponse updateUser(@Valid UserUpdateRequest userUpdateRequest, String userId) throws InvalidException {
         User user = getUser(userId);
 
         userMapper.updateUser(userUpdateRequest, user);
