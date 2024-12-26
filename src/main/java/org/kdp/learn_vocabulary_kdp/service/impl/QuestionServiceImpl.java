@@ -1,14 +1,13 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 18:26 PM (ICT)
+ * @LastModified: 2024/12/26 - 22:34 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -16,6 +15,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.entity.Exam;
 import org.kdp.learn_vocabulary_kdp.entity.Question;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.exam.Answer;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.question.QuestionResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.QuestionMapper;
@@ -68,6 +68,31 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         return questionList;
+    }
+
+    /**
+     * Kiểm tra câu trả lời và trả về số lượng câu đúng
+     * @param answers: Danh sách câu trả lời
+     * @param examId: Id của exam cần kiểm tra
+     * @return Số lượng câu đúng
+     * @hidden độ phức tạp O(n)
+     * */
+    @Override
+    public int checkCorrectAnswer(List<Answer> answers, String examId) {
+        AtomicInteger correctCount = new AtomicInteger();
+
+        // Lấy danh sách câu hỏi và convert sang map
+        Map<String, String> questionAnswerMap = questionRepository.findQuestionsByExam_Id(examId).stream()
+                .collect(Collectors.toMap(Question::getId, Question::getAnswer));
+
+        // Kiểm tra đáp án
+        answers.forEach(answer -> {
+            if (questionAnswerMap.get(answer.getQuestionId()).equalsIgnoreCase(answer.getAnswer())) {
+                correctCount.getAndIncrement();
+            }
+        });
+
+        return correctCount.get();
     }
 
     /**

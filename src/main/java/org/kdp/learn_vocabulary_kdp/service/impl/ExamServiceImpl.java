@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 21:29 PM (ICT)
+ * @LastModified: 2024/12/26 - 22:57 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -18,6 +18,7 @@ import org.kdp.learn_vocabulary_kdp.entity.Topic;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
 import org.kdp.learn_vocabulary_kdp.message.ExamMessage;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.exam.ExamSubmitRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.exam.ExamResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.question.QuestionResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
@@ -82,7 +83,45 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public ExamResponse getExam(String examId) throws AccessDeniedException, NotFoundException {
+    public ExamResponse getExamDto(String examId) {
+        Exam exam = getExam(examId);
+        // Không lấy danh sách câu hỏi
+        exam.setQuestions(null);
+        return examMapper.toExamResponse(exam);
+    }
+
+    @Override
+    @Transactional
+    public ExamResponse submitExam(ExamSubmitRequest request, String examId) throws InvalidException {
+        Exam exam = getExam(examId);
+
+        // Kiểm tra đã submit chưa
+        if (exam.getStartAt() != null && exam.getEndAt() != null) {
+            throw new InvalidException(ExamMessage.EXAM_SUBMITTED);
+        }
+
+        // Kiểm tra endAt < startAt
+        if (request.getEndAt().before(request.getStartAt())) {
+            throw new InvalidException(ExamMessage.END_MUST_GREATER_START);
+        }
+
+        // Kiểm tra số lượng câu trả lời
+        if (request.getResults().size() != exam.getTotalQuestions()) {
+            throw new InvalidException(ExamMessage.RESULTS_MISS);
+        }
+
+        exam.setStartAt(request.getStartAt());
+        exam.setEndAt(request.getEndAt());
+        exam.setCorrectCount(questionService.checkCorrectAnswer(request.getResults(), examId));
+
+        // Cập nhật lại vào CSDL
+        examRepository.saveAndFlush(exam);
+
+        exam.setQuestions(null);
+        return examMapper.toExamResponse(exam);
+    }
+
+    private Exam getExam(String examId) throws AccessDeniedException, NotFoundException {
         Exam exam =
                 examRepository.findById(examId).orElseThrow(() -> new NotFoundException(ExamMessage.EXAM_NOT_FOUND));
 
@@ -93,6 +132,6 @@ public class ExamServiceImpl implements ExamService {
             throw new AccessDeniedException("");
         }
 
-        return examMapper.toExamResponse(exam);
+        return exam;
     }
 }

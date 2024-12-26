@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 19:11 PM (ICT)
+ * @LastModified: 2024/12/26 - 23:01 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
 
@@ -32,13 +32,13 @@ public class Exam {
     @Column(name = "correct_count")
     int correctCount;
 
-    @Column(name = "start_at", updatable = false)
+    @Column(name = "start_at")
     Date startAt;
 
-    @Column(name = "end_at", updatable = false)
+    @Column(name = "end_at")
     Date endAt;
 
-    @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "exam", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     List<Question> questions;
 
     @ManyToOne(fetch = FetchType.LAZY)

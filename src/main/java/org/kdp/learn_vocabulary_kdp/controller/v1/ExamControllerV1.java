@@ -1,14 +1,16 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 21:33 PM (ICT)
+ * @LastModified: 2024/12/26 - 22:43 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.kdp.learn_vocabulary_kdp.message.GlobalMessage;
+import org.kdp.learn_vocabulary_kdp.model.dto.request.exam.ExamSubmitRequest;
 import org.kdp.learn_vocabulary_kdp.response.ApiResponse;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.ExamService;
 import org.springframework.http.HttpStatus;
@@ -37,6 +39,13 @@ public class ExamControllerV1 {
     @GetMapping("/{examId}")
     public ResponseEntity<Object> getExamById(@PathVariable("examId") String examId) {
         return ApiResponse.createSuccessResponse(
-                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, examService.getExam(examId));
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, examService.getExamDto(examId));
+    }
+
+    @PostMapping("/submit-exam")
+    public ResponseEntity<Object> submitExam(
+            @Valid @RequestBody ExamSubmitRequest request, @RequestParam("examId") String examId) {
+        return ApiResponse.createSuccessResponse(
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, examService.submitExam(request, examId));
     }
 }
