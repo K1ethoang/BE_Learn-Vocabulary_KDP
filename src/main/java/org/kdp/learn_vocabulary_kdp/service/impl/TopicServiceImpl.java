@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/25 - 13:36 PM (ICT)
+ * @LastModified: 2024/12/26 - 15:52 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -16,7 +16,10 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.Util.ContextHolderUtil;
-import org.kdp.learn_vocabulary_kdp.entity.*;
+import org.kdp.learn_vocabulary_kdp.entity.Topic;
+import org.kdp.learn_vocabulary_kdp.entity.Type;
+import org.kdp.learn_vocabulary_kdp.entity.User;
+import org.kdp.learn_vocabulary_kdp.entity.Word;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
 import org.kdp.learn_vocabulary_kdp.message.TopicMessage;
@@ -26,7 +29,6 @@ import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicCreationRequest
 import org.kdp.learn_vocabulary_kdp.model.dto.request.topic.TopicUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordCreationRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordUpdateRequest;
-import org.kdp.learn_vocabulary_kdp.model.dto.response.exam.ExamResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.ExamMapper;
@@ -74,11 +76,6 @@ public class TopicServiceImpl implements TopicService {
         return topic;
     }
 
-    @Override
-    public List<TopicResponse> getTopics() {
-        return List.of();
-    }
-
     /**
      * @hidden Auto get userId from Context Holder to checks
      */
@@ -94,22 +91,6 @@ public class TopicServiceImpl implements TopicService {
 
         PageableDto pageableDto = new PageableDto(topicPage);
 
-        pageableDto.setContent(Arrays.asList(content.toArray()));
-
-        return pageableDto;
-    }
-
-    @Override
-    public PageableDto getExams(Pageable pageable, String topicId) {
-        // Kiểm tra xem topic này có thuộc về user không
-        Topic topic = getTopic(topicId);
-
-        Page<Exam> examPage = examRepository.findAllByTopic_Id(topicId, pageable);
-
-        List<ExamResponse> content =
-                examPage.getContent().stream().map(examMapper::toExamResponse).toList();
-
-        PageableDto pageableDto = new PageableDto(examPage);
         pageableDto.setContent(Arrays.asList(content.toArray()));
 
         return pageableDto;

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/25 - 13:36 PM (ICT)
+ * @LastModified: 2024/12/26 - 15:13 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.interfaces;
 
@@ -22,11 +22,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 public interface TopicService {
-    List<TopicResponse> getTopics();
-
     PageableDto getTopicsByUserId(Pageable pageable);
-
-    PageableDto getExams(Pageable pageable, String topicId);
 
     TopicResponse createTopic(TopicCreationRequest topicCreationRequest);
 

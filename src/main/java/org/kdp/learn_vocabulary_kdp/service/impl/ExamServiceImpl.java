@@ -1,29 +1,36 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/20 - 21:17 PM (ICT)
+ * @LastModified: 2024/12/26 - 18:20 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.kdp.learn_vocabulary_kdp.Util.ContextHolderUtil;
 import org.kdp.learn_vocabulary_kdp.entity.Exam;
 import org.kdp.learn_vocabulary_kdp.entity.Topic;
 import org.kdp.learn_vocabulary_kdp.exception.InvalidException;
 import org.kdp.learn_vocabulary_kdp.exception.NotFoundException;
 import org.kdp.learn_vocabulary_kdp.message.ExamMessage;
-import org.kdp.learn_vocabulary_kdp.model.dto.request.exam.ExamCreationRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.exam.ExamResponse;
-import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.question.QuestionResponse;
+import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
 import org.kdp.learn_vocabulary_kdp.model.mapper.ExamMapper;
 import org.kdp.learn_vocabulary_kdp.repository.ExamRepository;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.ExamService;
+import org.kdp.learn_vocabulary_kdp.service.interfaces.QuestionService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
@@ -32,20 +39,41 @@ public class ExamServiceImpl implements ExamService {
     ExamRepository examRepository;
     TopicService topicService;
     ContextHolderUtil contextHolderUtil;
+    QuestionService questionService;
+
+    int MIN_WORD_IN_TOPIC = 5;
 
     @Override
-    public ExamResponse createExam(ExamCreationRequest request) throws InvalidException {
-        if (request.getCorrectAnswers() > request.getTotalQuestions())
-            throw new InvalidException(ExamMessage.CORRECT_SMALLER_OR_EQUAL_THAN_TOTAL_NUMBER);
+    public List<ExamResponse> getExamByTopicId(String topicId) {
+        List<Exam> examList = examRepository.findExamsByTopic_Id(topicId);
 
-        // Kiểm tra xem topic này có thuộc về user không
-        TopicResponse topicResponse = topicService.getTopicDto(request.getTopicId());
+        return examList.stream().map(examMapper::toExamResponse).toList();
+    }
 
-        Exam exam = examMapper.toExam(request);
-        exam.setTopic(Topic.builder().id(topicResponse.getId()).build());
+    @Override
+    @Transactional
+    public ExamResponse createExam(String topicId) throws InvalidException {
+        List<WordResponse> words = new ArrayList<>(topicService.getWords(topicId));
 
-        examRepository.save(exam);
-        return examMapper.toExamResponse(exam);
+        if (words.size() < MIN_WORD_IN_TOPIC) {
+            throw new InvalidException(ExamMessage.WORD_SIZE_MIN_5);
+        }
+
+        // Tạo exam trước để lấy Id
+        Exam exam = Exam.builder()
+                .totalQuestions(words.size())
+                .topic(Topic.builder().id(topicId).build())
+                .build();
+
+        examRepository.saveAndFlush(exam);
+        // Tạo các câu hỏi
+        List<QuestionResponse> questionList = questionService.generateRandomQuestions(words, exam);
+
+        // Trả về exam sau khi các câu hỏi được tạo
+        ExamResponse examResponse = examMapper.toExamResponse(exam);
+        examResponse.setQuestions(questionList);
+
+        return examResponse;
     }
 
     @Override
@@ -61,13 +89,5 @@ public class ExamServiceImpl implements ExamService {
         }
 
         return examMapper.toExamResponse(exam);
-    }
-
-    @Override
-    public void deleteExam(String examId) throws NotFoundException {
-        // Kiểm tra có tồn tại exam này không
-        ExamResponse examResponse = getExam(examId);
-
-        examRepository.deleteById(examId);
     }
 }
