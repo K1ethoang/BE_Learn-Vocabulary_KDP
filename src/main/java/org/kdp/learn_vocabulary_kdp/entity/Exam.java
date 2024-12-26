@@ -1,9 +1,12 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 13:04 PM (ICT)
+ * @LastModified: 2024/12/26 - 15:16 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.entity;
+
+import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,13 +14,11 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import java.util.Date;
-import java.util.List;
-
 @Entity(name = "exams")
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Exam {

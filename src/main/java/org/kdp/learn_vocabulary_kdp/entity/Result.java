@@ -1,25 +1,21 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 13:02 PM (ICT)
+ * @LastModified: 2024/12/26 - 15:16 PM (ICT)
  ************************************************/
-
 package org.kdp.learn_vocabulary_kdp.entity;
 
+import java.util.Date;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UuidGenerator;
-
-import java.util.Date;
 
 @Entity(name = "results")
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Result {
@@ -33,7 +29,7 @@ public class Result {
     @Column(name = "created_at", nullable = false, updatable = false)
     Date createdAt;
 
-    @Column(name = "correct_count",nullable = false)
+    @Column(name = "correct_count", nullable = false)
     int correctCount;
 
     @Column(name = "details", columnDefinition = "JSON")
