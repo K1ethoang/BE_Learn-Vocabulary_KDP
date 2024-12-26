@@ -1,12 +1,9 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 18:20 PM (ICT)
+ * @LastModified: 2024/12/26 - 21:29 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,6 +27,9 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -47,7 +47,10 @@ public class ExamServiceImpl implements ExamService {
     public List<ExamResponse> getExamByTopicId(String topicId) {
         List<Exam> examList = examRepository.findExamsByTopic_Id(topicId);
 
-        return examList.stream().map(examMapper::toExamResponse).toList();
+        return examList.stream().map(exam -> {
+            exam.setQuestions(null);
+            return examMapper.toExamResponse(exam);
+        }).toList();
     }
 
     @Override
