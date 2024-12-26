@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 15:11 PM (ICT)
+ * @LastModified: 2024/12/26 - 21:33 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.controller.v1;
 
@@ -25,7 +25,7 @@ public class ExamControllerV1 {
     @GetMapping("")
     public ResponseEntity<Object> getExamByTopicId(@RequestParam String topicId) {
         return ApiResponse.createSuccessResponse(
-                HttpStatus.CREATED, GlobalMessage.SUCCESSFULLY, examService.getExamByTopicId(topicId));
+                HttpStatus.OK, GlobalMessage.SUCCESSFULLY, examService.getExamByTopicId(topicId));
     }
 
     @PostMapping("")

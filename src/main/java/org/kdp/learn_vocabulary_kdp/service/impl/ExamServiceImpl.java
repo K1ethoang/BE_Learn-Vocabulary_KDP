@@ -5,6 +5,9 @@
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -27,9 +30,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -47,10 +47,12 @@ public class ExamServiceImpl implements ExamService {
     public List<ExamResponse> getExamByTopicId(String topicId) {
         List<Exam> examList = examRepository.findExamsByTopic_Id(topicId);
 
-        return examList.stream().map(exam -> {
-            exam.setQuestions(null);
-            return examMapper.toExamResponse(exam);
-        }).toList();
+        return examList.stream()
+                .map(exam -> {
+                    exam.setQuestions(null);
+                    return examMapper.toExamResponse(exam);
+                })
+                .toList();
     }
 
     @Override
