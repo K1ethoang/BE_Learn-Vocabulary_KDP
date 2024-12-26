@@ -10,6 +10,8 @@ services:
       - mysql_data:/var/lib/mysql # Lưu dữ liệu MySQL
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro # Chạy file SQL khi container khởi động lần đầu MySQL
     restart: always
+    networks:
+      - kdp-network
 
   kdp-service:
     build:
@@ -23,6 +25,12 @@ services:
     restart: always
     env_file:
       - .env.dev
+    networks:
+      - kdp-network
 
 volumes:
   mysql_data:
+
+networks:
+  kdp-network:
+    name: kdp-network
