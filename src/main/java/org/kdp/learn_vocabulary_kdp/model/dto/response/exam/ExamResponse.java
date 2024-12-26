@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 15:01 PM (ICT)
+ * @LastModified: 2024/12/26 - 19:02 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.dto.response.exam;
 
@@ -15,7 +15,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.question.QuestionResponse;
-import org.kdp.learn_vocabulary_kdp.model.dto.response.result.ResultResponse;
 
 @AllArgsConstructor
 @Data
@@ -25,11 +24,14 @@ public class ExamResponse {
     String id;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    Date createdAt;
+    Date startAt;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Date endAt;
 
     int totalQuestions;
 
-    List<QuestionResponse> questions;
+    int correctCount;
 
-    ResultResponse result;
+    List<QuestionResponse> questions;
 }

@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 15:52 PM (ICT)
+ * @LastModified: 2024/12/26 - 22:15 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.model.mapper;
 
@@ -18,5 +18,9 @@ public class ExamMapper {
 
     public ExamResponse toExamResponse(Exam exam) {
         return modelMapper.map(exam, ExamResponse.class);
+    }
+
+    public Exam toExam(ExamResponse examResponse) {
+        return modelMapper.map(examResponse, Exam.class);
     }
 }

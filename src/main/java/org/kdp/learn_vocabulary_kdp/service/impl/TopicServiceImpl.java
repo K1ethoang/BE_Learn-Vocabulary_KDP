@@ -1,7 +1,7 @@
 /*************************************************
  * Copyright (c) 2024. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/26 - 15:52 PM (ICT)
+ * @LastModified: 2024/12/26 - 23:00 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.service.impl;
 
@@ -31,20 +31,16 @@ import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordCreationRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.request.word.WordUpdateRequest;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.topic.TopicResponse;
 import org.kdp.learn_vocabulary_kdp.model.dto.response.word.WordResponse;
-import org.kdp.learn_vocabulary_kdp.model.mapper.ExamMapper;
 import org.kdp.learn_vocabulary_kdp.model.mapper.TopicMapper;
 import org.kdp.learn_vocabulary_kdp.model.mapper.WordMapper;
-import org.kdp.learn_vocabulary_kdp.repository.ExamRepository;
-import org.kdp.learn_vocabulary_kdp.repository.TopicRepository;
-import org.kdp.learn_vocabulary_kdp.repository.TypeRepository;
-import org.kdp.learn_vocabulary_kdp.repository.WordRepository;
+import org.kdp.learn_vocabulary_kdp.repository.*;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.ExcelService;
 import org.kdp.learn_vocabulary_kdp.service.interfaces.TopicService;
-import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -58,9 +54,8 @@ public class TopicServiceImpl implements TopicService {
     WordMapper wordMapper;
     TypeRepository typeRepository;
     ExamRepository examRepository;
-    ExamMapper examMapper;
     ExcelService excelService;
-    private final ResourcePatternResolver resourcePatternResolver;
+    QuestionRepository questionRepository;
 
     public Topic getTopic(String topicId) {
         Topic topic = topicRepository
@@ -212,6 +207,7 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
+    @Transactional
     public void deleteTopic(String topicId) {
         Topic topic = getTopic(topicId);
 
