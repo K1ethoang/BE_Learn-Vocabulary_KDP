@@ -1,7 +1,7 @@
 /*************************************************
- * Copyright (c) 2024. K1ethoang
+ * Copyright (c) 2024-2025. K1ethoang
  * @Author: Kiet Hoang Gia
- * @LastModified: 2024/12/22 - 13:37 PM (ICT)
+ * @LastModified: 2025/01/05 - 14:59 PM (ICT)
  ************************************************/
 package org.kdp.learn_vocabulary_kdp.configuration;
 
@@ -50,6 +50,7 @@ public class ApplicationInitConfig {
                 User user = User.builder()
                         .email("kiethoang101@gmail.com")
                         .password(passwordEncoder.encode("12345678"))
+                        .isActive(true)
                         .fullName("admin")
                         .role(role)
                         .build();
